@@ -26,7 +26,7 @@ class _QuestionsOneState extends State<QuestionsOne> {
         Padding(
           padding: const EdgeInsets.only(top: 45, left: 20, right: 20),
           child: Container(
-              height: 270,
+
               decoration: BoxDecoration(
                 boxShadow: const [
                   BoxShadow(

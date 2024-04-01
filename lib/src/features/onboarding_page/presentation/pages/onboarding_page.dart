@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
+import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/my_widgets/onboarding_widget_two.dart';
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/onboarding_two_widget.dart';
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/onboarding_widget_three.dart';
 
@@ -26,14 +27,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
       body: Column(
         children: [
            Container(
-             height: 728,
+             height: height,
              child:
                Swiper(
                   itemBuilder: (BuildContext context, int index) {
                     return pageCount[index];
                   },
                   itemCount: pageCount.length,
-                  pagination: SwiperPagination(),
+                  pagination: const SwiperPagination(),
                   // control: SwiperControl(),
                 ),
            ),
@@ -47,4 +48,6 @@ List pageCount=[
   OnboardingWidgetOne(),
   OnboardingWidgetTwo(),
   OnboardingWidgetThree(),
+  OnboardingWidgetTwot(),
+
 ];

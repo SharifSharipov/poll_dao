@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
-import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/questions.dart';
-import 'package:poll_dao/src/features/widgets/base_conationer.dart';
-
 import '../../../../core/colors/app_colors.dart';
 
 class OnboardingWidgetOne extends StatelessWidget {

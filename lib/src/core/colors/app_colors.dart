@@ -9,6 +9,7 @@ class AppColors{
   static const Color c_02182B=Color(0xff02182B);
   static const Color black=Color(0xff000000);
   static const Color c_93A2B4=Color(0xff93A2B4);
+  static const Color c_C8E8FA=Color(0xffC8E8FA);
   // ignore: constant_identifier_names
   static const Color c_A0A4A7=Color(0xffA0A4A7);
   // ignore: constant_identifier_names

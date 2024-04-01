@@ -18,6 +18,8 @@ class AppImages {
   static const String variationsTwentiny = "assets/images/variations_twentiny.png";
   static const String flowers = "assets/images/flowers.png";
   static const String sunflower = "assets/images/sunflower.png";
+  static const String automobile = "assets/images/automobile.png";
+  static const String yaxt = "assets/images/yaxt.png";
 
   ///svg
   static const String add = "assets/svg/add.svg";
@@ -37,4 +39,8 @@ class AppImages {
   static const String personThere = "assets/svg/person_there.svg";
   static const String personTwo = "assets/svg/person_two.svg";
   static const String person = "assets/svg/person.svg";
+  static const String selectedLike="assets/svg/selected_like.svg";
+  static const String unSelectedLike="assets/svg/unselected_like.svg";
+  static const String imageSun = "assets/svg/image_sun.svg";
+  static const String user="assets/svg/user.svg";
 }

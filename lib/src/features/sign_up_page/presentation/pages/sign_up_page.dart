@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               children: [
                 // CaruselSelectImage(Theme.of(context)),
-                RegisterTextField(
+               /* RegisterTextField(
                     controller: emailController,
                     textOne: "Email Adress",
                     textTwo: "emiredro@yandex.com",
@@ -45,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: emailController,
                     textOne: "Password",
                     textTwo: "Minimum 8 characters",
-                    icon: AppImages.clock),
+                    icon: AppImages.clock),*/
                 // Container(
                 //   height: MediaQuery.of(context).size.height * 0.47,
                 //   width: double.infinity,
