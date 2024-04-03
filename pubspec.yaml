@@ -13,6 +13,8 @@ dependencies:
   gap: ^3.0.1
   zoom_tap_animation: ^1.1.0
   card_swiper: ^3.0.1
+  accordion: ^2.6.0
+  custom_accordion: ^1.0.0
 
 dev_dependencies:
   flutter_test:

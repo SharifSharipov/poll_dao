@@ -39,8 +39,18 @@ class AppImages {
   static const String personThere = "assets/svg/person_there.svg";
   static const String personTwo = "assets/svg/person_two.svg";
   static const String person = "assets/svg/person.svg";
-  static const String selectedLike="assets/svg/selected_like.svg";
-  static const String unSelectedLike="assets/svg/unselected_like.svg";
+  static const String selectedLike = "assets/svg/selected_like.svg";
+  static const String unSelectedLike = "assets/svg/unselected_like.svg";
   static const String imageSun = "assets/svg/image_sun.svg";
-  static const String user="assets/svg/user.svg";
+  static const String user = "assets/svg/user.svg";
+  static const String education = "assets/svg/education.svg";
+  static const String gender = "assets/svg/gender.svg";
+  static const String language = "assets/svg/language.svg";
+  static const String age = "assets/svg/age.svg";
+  static const String lowIosButton = "assets/svg/low_ios_button.svg";
+  static const String arrowBackIosRight = "assets/svg/arrow_back_ios_right.svg";
+  static const String location = "assets/svg/location.svg";
+  static const String nationality = "assets/svg/nationality.svg";
+  static const String newPassword = "assets/svg/new_password.svg";
+  static const String oldPassword = "assets/svg/old_password.svg";
 }

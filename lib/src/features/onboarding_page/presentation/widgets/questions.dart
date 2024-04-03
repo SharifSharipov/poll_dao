@@ -3,7 +3,7 @@ import 'package:poll_dao/src/core/extentions/extentions.dart';
 
 import '../../../../core/colors/app_colors.dart';
 import '../../../../core/icons/app_icons.dart';
-import 'options_select.dart';
+import '../../../discover_page/presentation/widgets/options_select.dart';
 
 class QuestionsOne extends StatefulWidget {
   const QuestionsOne({super.key});

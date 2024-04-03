@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/extentions/extentions.dart';
-
 class RegisterTextField extends StatelessWidget {
   final TextEditingController controller;
   final String textOne;
@@ -42,7 +40,7 @@ class RegisterTextField extends StatelessWidget {
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
-          fillColor: Colors.red,
+          //fillColor: Colors.red,
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide.none,
           ),

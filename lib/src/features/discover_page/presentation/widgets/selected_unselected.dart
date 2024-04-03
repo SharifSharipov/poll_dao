@@ -20,19 +20,22 @@ class _SelectedUnselectedState extends State<SelectedUnselected> {
     double width = MediaQuery.of(context).size.width;
     return ZoomTapAnimation(
       onTap: widget.onTap,
-      child: Container(
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            25,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Container(
+          height: 36,
+          width: 36,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              18,
+            ),
+            color: widget.isSelected ? AppColors.white : AppColors.c_5856D6,
           ),
-          color: widget.isSelected ? AppColors.white : AppColors.c_5856D6,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: SvgPicture.asset(
-              widget.isSelected ? AppImages.unSelectedLike : AppImages.selectedLike),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: SvgPicture.asset(
+                widget.isSelected ? AppImages.unSelectedLike : AppImages.selectedLike),
+          ),
         ),
       ),
     );
