@@ -18,6 +18,7 @@ Widget createPoll(BuildContext context) {
                 slivers: [
                   SliverToBoxAdapter(
                     child: Column(
+
                       children: [
                         Padding(
                             padding: const EdgeInsets.only(right: 15, top: 15),
@@ -28,7 +29,7 @@ Widget createPoll(BuildContext context) {
                                       Navigator.pop(context);
                                     },
                                     child:customTextWidget(text: "Done", color: AppColors.c_0D72FF)))),
-                        customTextWidget(text: text, color: color),
+                        customTextWidget(text:"hello", color: AppColors.black),
                         //
                       ],
                     ),
