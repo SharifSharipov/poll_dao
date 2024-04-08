@@ -26,7 +26,7 @@ class _DisCoverPageState extends State<DisCoverPage> {
           elevation: 0,
           backgroundColor: AppColors.secondary.withOpacity(0.9),
           leading: personLeading(context),
-          actions: [createPoll(context)]),
+          actions: [CreatePoll()]),
       body: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(
