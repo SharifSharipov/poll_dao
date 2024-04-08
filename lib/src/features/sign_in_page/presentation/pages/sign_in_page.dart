@@ -1,17 +1,14 @@
-import 'package:accordion/accordion.dart';
-import 'package:custom_accordion/custom_accordion.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gap/gap.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
-
-import '../../../discover_page/presentation/widgets/person_data_select.dart';
-
+import 'package:poll_dao/src/features/sign_in_page/presentation/widgets/global_button.dart';
+import 'package:poll_dao/src/features/widgets/base_bottom_sheet.dart';
+import '../../../sign_up_page/presentation/pages/sign_up_page.dart';
+import '../../../widgets/base_textfield.dart';
 class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  const SignInPage({super.key});
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -20,207 +17,172 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sign In"),
-      ),
-      body: ListView(
-        children: [Column(
-          children: [
-            /*   Container(
-              padding: const EdgeInsets.all(30).copyWith(left: 20),
-              decoration: BoxDecoration(
-                color: AppColors.c_F0F3FA,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return BaseBottomSheet(
+        height: height,
+        backgroundColor: AppColors.white,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              AppImages.gender,
-                              width: 30,
-                              height: 30,
-                            ),
-                          ),
-                        ),
-                        const Gap(30),
-                        Expanded(
-                          child: RichText(
-                            text: const TextSpan(
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                color: Colors.black,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Merhaba, ',
-                                ),
-                                TextSpan(
-                                  text: '\ndünya!',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                  Padding(
+                      padding: const EdgeInsets.only(right: 15, top: 15),
+                      child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel',
+                                  style: TextStyle(color: AppColors.c_0D72FF, fontSize: 17))))),
+                  (height / 23).ph,
+                  const Center(
+                    child: Text(
+                      'Welcome  Back',
+                      style: TextStyle(
+                          color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 33),
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset(
-                        AppImages.arrowBackIosRight,
-                        width: 24,
-                        height: 24,
-                      ))
-                ],
-              ),
-            ),*/
-            20.ph,
-            Accordion(
-              paddingListTop: 3,
-              paddingListBottom: 3,
-              children: [
-                AccordionSection(
-                  header: Container(
-                    height: 40,
-                 /*     padding: const EdgeInsets.all(30).copyWith(left: 20),*/
-                      decoration: BoxDecoration(
-                          /*color: AppColors.c_F0F3FA,*/ borderRadius: BorderRadius.circular(12)),
-                      child: Text("helllo")),
-                  content: Text("content"),
-                )
-              ], /*headerBackgroundColor: AppColors.c_F0F3FA*/
-            ),
-            20.ph,
-            Accordion(
-              paddingListTop: 3,
-              paddingListBottom: 3,
-              children: [
-                AccordionSection(
-                  header: Container(
-                    padding: EdgeInsets.all(30).copyWith(left: 20), // Paddingni o'zgartiring
-                    decoration: BoxDecoration(
-                      color: AppColors.c_F0F3FA,
-                      borderRadius: BorderRadius.circular(12),
+                  const Center(
+                    child: Text(
+                      'Sign in continue where you left off',
+                      style: TextStyle(color: AppColors.c_5B6D83, fontSize: 22),
                     ),
-                    child: Text("helllo"),
                   ),
-                  content: Text("content"),
-                )
-              ],
-            ),
-            CustomAccordion(
-              title: 'Accordion with one child',
-              subTitle: 'Accordion Sub Title',
-              headerBackgroundColor: Colors.blue,
-              titleStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              subTitleStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Colors.white,
-              ),
-              toggleIconOpen: Icons.keyboard_arrow_down_sharp,
-              toggleIconClose: Icons.keyboard_arrow_up_sharp,
-              headerIconColor: Colors.white,
-              accordionElevation: 0,
-              widgetItems: const Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                child: Row(
-                  children: [
-                    CustomAccordion(
-
-                      title: 'Accordion with many child',
-                      headerBackgroundColor: Colors.blue,
-                      titleStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      toggleIconOpen: Icons.keyboard_arrow_down_sharp,
-                      toggleIconClose: Icons.keyboard_arrow_up_sharp,
-                      headerIconColor: Colors.white,
-                      accordionElevation: 0,
-                      widgetItems: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                  (height / 23).ph,
+                  const BaseTextField(
+                    hintText: 'emirerdo@yandex.com',
+                    text: 'Email Address',
+                    icon: AppImages.email,
+                  ),
+                  const BaseTextField(
+                    hintText: '.....................',
+                    text: 'Password',
+                    icon: AppImages.clock,
+                  ),
+                  (height / 30).ph,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: GlobalButton(
+                      onTap: () {},
+                      data: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Lorem Ipsum',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'ELEVATED BUTTON',
+                          Center(
+                            child: Text(
+                              'Sign in',
+                              style: TextStyle(
+                                  color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 25),
                             ),
                           )
                         ],
                       ),
+                      color: AppColors.c_5856D6,
                     ),
-                  ],
-                ),
+                  ),
+                  (height / 8).ph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: width / 3.31,
+                        height: 1,
+                        color: AppColors.c_93A2B4,
+                      ),
+                      const Text(
+                        'Or login with',
+                        style: TextStyle(color: AppColors.c_5B6D83),
+                      ),
+                      Container(
+                        width: width / 3.31,
+                        height: 1,
+                        color: AppColors.c_93A2B4,
+                      ),
+                    ],
+                  ),
+                  (height / 46.3).ph,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: GlobalButton(
+                      border: Border.all(color: AppColors.c_A0A4A7),
+                      onTap: () {},
+                      data: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          1.pw,
+                          SvgPicture.asset(AppImages.google),
+                          (height / 92.6).ph,
+                          const Text(
+                            textAlign: TextAlign.center,
+                            'Sign in with Google',
+                            style: TextStyle(color: AppColors.black, fontSize: 19),
+                          ),
+                          const Text(
+                            "dsadsadas",
+                            style: TextStyle(color: Colors.transparent),
+                          )
+                        ],
+                      ),
+                      color: AppColors.white,
+                    ),
+                  ),
+                  20.ph,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: GlobalButton(
+                      onTap: () {},
+                      data: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          1.pw,
+                          SvgPicture.asset(AppImages.apple),
+                          (height / 92.6).ph,
+                          const Text(
+                            textAlign: TextAlign.center,
+                            'Sign in with Apple',
+                            style: TextStyle(color: AppColors.white, fontSize: 19),
+                          ),
+                          const Text(
+                            "dsadsadas",
+                            style: TextStyle(color: Colors.transparent),
+                          )
+                        ],
+                      ),
+                      color: AppColors.black,
+                    ),
+                  ),
+                  (height / 92.6).ph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Don`t you have an account?',
+                        style: TextStyle(
+                          color: AppColors.c_93A2B4,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.white,
+                                elevation: 0,
+                                context: context,
+                                builder: (context) => const SignUpPage());
+                          },
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(color: AppColors.c_5856D6),
+                          ))
+                    ],
+                  )
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomAccordion(
-                title: 'Accordion with List Items',
-                subTitle: 'Accordion toggle disabled',
-                headerBackgroundColor: Colors.blue,
-                titleStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                subTitleStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.white,
-                ),
-                toggleIconOpen: Icons.keyboard_arrow_down_sharp,
-                toggleIconClose: Icons.keyboard_arrow_up_sharp,
-                headerIconColor: Colors.white,
-                accordionElevation: 0,
-                disableToggle: true,
-                widgetItems: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: List<Widget>.generate(5, (int index) {
-                    return Text('Item $index');
-                  }),
-                ),
-              ),
-            ),
-       /*     const PersonData(
-              textOne: 'Hello',
-              textTwo: 'Tashkent',
-              icon: AppImages.age,
-            ),*/
+            )
           ],
-        )],
-      ),
-    );
+        ));
   }
 }

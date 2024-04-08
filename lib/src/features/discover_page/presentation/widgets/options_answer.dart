@@ -4,7 +4,6 @@ import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/options_select.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/voice_date.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 class BuildButton extends StatefulWidget {
   const BuildButton({super.key, required this.onTap});
   final VoidCallback onTap;

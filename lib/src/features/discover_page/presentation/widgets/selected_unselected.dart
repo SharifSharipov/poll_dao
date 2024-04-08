@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../../../../core/colors/app_colors.dart';
-
 class SelectedUnselected extends StatefulWidget {
   final bool isSelected;
   final VoidCallback onTap;

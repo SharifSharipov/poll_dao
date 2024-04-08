@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
-
 import '../../../../core/colors/app_colors.dart';
 import 'answers.dart';
-
 class OptionsSelect extends StatefulWidget {
   final VoidCallback onTap;
   final String textOne;

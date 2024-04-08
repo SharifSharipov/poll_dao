@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../../../core/colors/app_colors.dart';
-
 Widget Answers(BuildContext context, String text) {
   double width = MediaQuery.of(context).size.width;
   return Container(

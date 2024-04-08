@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/selected_unselected.dart';
-
 class ImageSelect extends StatefulWidget {
   final bool isSelected;
   final VoidCallback onTap;

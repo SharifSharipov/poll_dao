@@ -4,10 +4,11 @@ class BaseBottomSheet extends StatefulWidget {
   const BaseBottomSheet({
     Key? key,
     required this.height,
-    required this.child,
+    required this.child, required this.backgroundColor,
   }) : super(key: key);
   final CustomScrollView child;
   final double height;
+  final Color backgroundColor;
 
   @override
   State<BaseBottomSheet> createState() => _BaseBottomSheetState();
@@ -25,7 +26,7 @@ class _BaseBottomSheetState extends State<BaseBottomSheet> {
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(20),
         ),
-        color: Theme.of(context).canvasColor,
+        color: widget.backgroundColor,
       ),
       child: widget.child
     );
