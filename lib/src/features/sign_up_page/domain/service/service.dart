@@ -1,18 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:poll_dao/src/core/constants/server_constants.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/universaldata.dart';
+import 'package:poll_dao/src/features/sign_in_page/data/models/universaldata.dart';
 import 'package:poll_dao/src/features/sign_up_page/data/models/user_model.dart';
 import 'package:poll_dao/src/features/sign_up_page/domain/loger.dart';
 import 'package:poll_dao/src/features/sign_up_page/domain/repositories/storage_repository.dart';
 
-class Service {
+class ApiService {
   final _dio = Dio(
     BaseOptions(
-      //baseUrl: baseUrl,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: {"Content-Type": "application/json"},
       connectTimeout: Duration(seconds: TimeOutConstants.connectTimeout),
       receiveTimeout: Duration(seconds: TimeOutConstants.receiveTimeout),
       sendTimeout: Duration(seconds: TimeOutConstants.sendTimeout),
@@ -43,11 +40,15 @@ class Service {
     );
   }
 
-  Future<UniversalData> sendSignUpRequest() async {
+  Future<UniversalData> sendSignUpRequest({required String email,required  String password,required  String name}) async {
     Response response;
     try {
-      response =await _dio.post("http://94.131.10.253:3000/auth/sign-up",);
-      LoggerService.i("Response=>${response}");
+      response = await _dio.post("http://94.131.10.253:3000/auth/sign-up", data: {
+        "email": email,
+        'password': password,
+        'name': name,
+      });
+      LoggerService.i("Response=>$response");
       LoggerService.i("Response=>${response.data}");
       return UniversalData(data: UserModel.fromJson(response.data));
     } on DioException catch (e) {

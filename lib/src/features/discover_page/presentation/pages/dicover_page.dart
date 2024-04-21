@@ -46,7 +46,7 @@ class _DisCoverPageState extends State<DisCoverPage> {
                           backgroundColor: AppColors.white,
                           elevation: 0,
                           context: context,
-                          builder: (context) => ProfilePage());
+                          builder: (context) => const ProfilePage());
                     },
                     icon: SvgPicture.asset(AppImages.user))),
           ),
@@ -58,7 +58,7 @@ class _DisCoverPageState extends State<DisCoverPage> {
                     backgroundColor: AppColors.white,
                     elevation: 0,
                     context: context,
-                    builder: (context) => CreatePollPage());
+                    builder: (context) => const CreatePollPage());
               },
               icon: SvgPicture.asset(AppImages.add),
             )
@@ -128,17 +128,17 @@ class _DisCoverPageState extends State<DisCoverPage> {
           ),
           SliverToBoxAdapter(
               child: Column(children: [
-            VoiceWidget(),
+            const VoiceWidget(),
             BuildButtonWidget(context),
-            VoiceWidget(),
-            VoiceWidget(),
-            VoiceWidget(),
+            const VoiceWidget(),
+            const VoiceWidget(),
+            const VoiceWidget(),
             BuildButtonWidget(context),
-            VoiceWidget(),
-            VoiceWidget(),
+            const VoiceWidget(),
+            const VoiceWidget(),
             BuildButtonWidget(context),
-            VoiceWidget(),
-            VoiceWidget(),
+            const VoiceWidget(),
+            const VoiceWidget(),
             BuildButtonWidget(context),
             BuildButtonWidget(context),
             BuildButtonWidget(context),

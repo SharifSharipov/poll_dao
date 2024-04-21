@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 part 'image_text_edition_controller_state.dart';
 class ImageTextEditionControllerCubit extends Cubit<ImageTextEditionControllerState> {
   ImageTextEditionControllerCubit() : super(ImageTextEditionControllerInitial());

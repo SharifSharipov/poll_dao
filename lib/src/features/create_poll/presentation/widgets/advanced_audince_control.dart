@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/config/routes/routes.dart';
@@ -11,7 +10,7 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/peronal_i
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/text_widget.dart';
 
 class AdvancedAudienceControl extends StatefulWidget {
-  const AdvancedAudienceControl({Key? key}) : super(key: key);
+  const AdvancedAudienceControl({super.key});
 
   @override
   _AdvancedAudienceControlState createState() => _AdvancedAudienceControlState();

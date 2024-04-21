@@ -6,15 +6,14 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_bu
 
 class ImageDataTextField extends StatefulWidget {
   const ImageDataTextField(
-      {Key? key,
+      {super.key,
         required this.controller,
         required this.hintText,
         required this.answer,
         required this.onTapOne,
         required this.onTapTwo,
         required this.onChanged,
-        this.onTapThree,})
-      : super(key: key);
+        this.onTapThree,});
 
   final TextEditingController controller;
   final String hintText;

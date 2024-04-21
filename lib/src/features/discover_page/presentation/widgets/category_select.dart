@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/catetgory_base_container.dart';
-import 'base_conatiner.dart';
-import 'package:flutter/material.dart';
-import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/features/discover_page/presentation/widgets/catetgory_base_container.dart';
-import 'base_conatiner.dart';
 
 class SelectCategory extends StatefulWidget {
   const SelectCategory({
-    Key? key,
+    super.key,
     required this.selectColor,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final bool selectColor;
   final VoidCallback onTap;

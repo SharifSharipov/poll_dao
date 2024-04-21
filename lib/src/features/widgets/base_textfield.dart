@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
+
 class BaseTextField extends StatefulWidget {
   final String hintText;
   final String text;
   final String icon;
-  const BaseTextField({super.key, required this.hintText, required this.text, required this.icon});
+  final bool isObscure;
+  final TextEditingController? controller;
+
+  const BaseTextField({
+    super.key,
+    required this.hintText,
+    required this.text,
+    required this.icon,
+    this.isObscure = false,
+    this.controller,
+  });
 
   @override
   State<BaseTextField> createState() => _BaseTextFieldState();
@@ -45,7 +56,8 @@ class _BaseTextFieldState extends State<BaseTextField> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: TextField(
-                      controller: TextEditingController(),
+                      obscureText: widget.isObscure,
+                      controller: widget.controller,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: widget.hintText,

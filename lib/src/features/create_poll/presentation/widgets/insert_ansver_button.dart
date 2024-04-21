@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/image_data_text_field.dart';
 
 class InsertAnswer extends StatefulWidget {
   const InsertAnswer({
-    Key? key,
+    super.key,
     required this.hintText,
-  }) : super(key: key);
+  });
   final String hintText;
 
   @override
@@ -66,14 +65,14 @@ class _InsertAnswerState extends State<InsertAnswer> {
                 if (index != textControllers.length - 1)
                   Padding(
                     padding: EdgeInsets.only(left: width / 8, right: width / 42.6),
-                    child: Divider(height: 1, color: AppColors.c_A0A4A7),
+                    child: const Divider(height: 1, color: AppColors.c_A0A4A7),
                   ),
               ],
             );
           },
           itemCount: textControllers.length,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
         ),
       ),
     );

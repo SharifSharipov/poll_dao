@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class BaseBottomSheet extends StatefulWidget {
   const BaseBottomSheet({
-    Key? key,
+    super.key,
     required this.height,
     required this.child, required this.backgroundColor,
-  }) : super(key: key);
+  });
   final CustomScrollView child;
   final double height;
   final Color backgroundColor;

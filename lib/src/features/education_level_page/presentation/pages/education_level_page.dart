@@ -6,7 +6,7 @@ import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/core/constants/coursy_of_study_list.dart';
 import 'package:poll_dao/src/features/education_level_page/presentation/widgets/education_level_widget.dart';
 class EducationLevelPage extends StatelessWidget {
-  const EducationLevelPage({Key? key}) : super(key: key);
+  const EducationLevelPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

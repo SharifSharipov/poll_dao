@@ -47,25 +47,15 @@ class _ImageExternalState extends State<ImageExternal> {
     final image = await pickImage.pickImage(source: ImageSource.gallery, imageQuality: 80);
     if(image == null) return;
     setState(() {
-      if (image != null) {
-        imageFile = File(image.path);
-      }else{
-        print("No image selected");
-        debugPrint(image.toString());
-      }
-    });
+      imageFile = File(image.path);
+        });
   }
   Future pickImageFromCamera() async {
     final image = await pickImage.pickImage(source: ImageSource.camera, imageQuality: 80);
     if(image == null) return;
     setState(() {
-      if (image != null) {
-        imageFile = File(image.path);
-      }else{
-        print("No image selected");
-        debugPrint(image.toString());
-      }
-    });
+      imageFile = File(image.path);
+        });
   }
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/questions.dart';
@@ -37,7 +36,7 @@ class OnboardingWidgetThree extends StatelessWidget {
                         fontSize: 22, fontWeight: FontWeight.w500, color: AppColors.c_93A2B4),
                   ),
                   30.ph,
-                  QuestionsOne()
+                  const QuestionsOne()
                 ],
               ),
             )

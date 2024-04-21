@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/icons/app_icons.dart';
-import 'package:poll_dao/src/features/active_polls_page/presentation/widget/indicator.dart';
 import 'package:poll_dao/src/features/active_polls_page/presentation/widget/indicator_two.dart';
 
 class ActivePollsPageWidgetsTwo extends StatefulWidget {

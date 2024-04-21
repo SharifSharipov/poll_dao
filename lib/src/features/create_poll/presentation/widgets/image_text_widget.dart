@@ -8,9 +8,9 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/image_dat
 
 class BaseNewPoll extends StatefulWidget {
   const BaseNewPoll({
-    Key? key,
+    super.key,
     required this.hintText,
-  }) : super(key: key);
+  });
 
   final String hintText;
 
@@ -107,7 +107,7 @@ class _BaseNewPollState extends State<BaseNewPoll> {
             },
             itemCount: textControllers.length,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
           ),
         ),
       ),

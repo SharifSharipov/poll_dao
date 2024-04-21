@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -10,8 +8,7 @@ class ChargePercentageIndicator extends StatefulWidget {
   final String option;
   final String text;
 
-  const ChargePercentageIndicator({Key? key, required this.chargePercentage, required this.option, required this.text})
-      : super(key: key);
+  const ChargePercentageIndicator({super.key, required this.chargePercentage, required this.option, required this.text});
 
   @override
   State<ChargePercentageIndicator> createState() => _ChargePercentageIndicatorState();
@@ -34,7 +31,7 @@ class _ChargePercentageIndicatorState extends State<ChargePercentageIndicator> {
        }
       });
     },
-      child: Container(
+      child: SizedBox(
         width: width,
         child: Row(
           children: [
@@ -58,13 +55,13 @@ class _ChargePercentageIndicatorState extends State<ChargePercentageIndicator> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(width: (width/1.5),
+                SizedBox(width: (width/1.5),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                        Text(
                         widget.text,
-                        style: TextStyle(fontSize: 17),
+                        style: const TextStyle(fontSize: 17),
                        ),
 
                       Text(
@@ -75,7 +72,7 @@ class _ChargePercentageIndicatorState extends State<ChargePercentageIndicator> {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 270,
                   height: 15,
                   child: LinearProgressIndicator(

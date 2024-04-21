@@ -11,7 +11,7 @@ import 'package:poll_dao/src/features/active_polls_page/presentation/widget/cupe
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
 
 class ActivePolsPage extends StatefulWidget {
-  const ActivePolsPage({Key? key}) : super(key: key);
+  const ActivePolsPage({super.key});
 
   @override
   State<ActivePolsPage> createState() => _ActivePolsPageState();

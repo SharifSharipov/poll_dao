@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poll_dao/src/features/active_polls_page/presentation/widget/indicator.dart';
 import 'package:poll_dao/src/features/active_polls_page/presentation/pages/acc_tivie_pols_page.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
 import 'package:poll_dao/src/features/education_level_page/presentation/pages/education_level_page.dart';

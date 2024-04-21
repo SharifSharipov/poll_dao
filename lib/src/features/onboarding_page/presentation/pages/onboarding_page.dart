@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
@@ -7,10 +6,9 @@ import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/onboa
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/onboarding_widget_three.dart';
 
 import '../widgets/onboarding_one_widget.dart';
-import '../widgets/questions.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
+  const OnboardingPage({super.key});
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
@@ -26,7 +24,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       backgroundColor: AppColors.secondary.withOpacity(0.9),
       body: Column(
         children: [
-           Container(
+           SizedBox(
              height: height,
              child:
                Swiper(
@@ -45,9 +43,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 }
 List pageCount=[
-  OnboardingWidgetOne(),
-  OnboardingWidgetTwo(),
-  OnboardingWidgetThree(),
-  OnboardingWidgetTwot(),
+  const OnboardingWidgetOne(),
+  const OnboardingWidgetTwo(),
+  const OnboardingWidgetThree(),
+  const OnboardingWidgetTwot(),
 
 ];

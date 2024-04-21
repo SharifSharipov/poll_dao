@@ -41,7 +41,7 @@ class _ActivePollsNavigateState extends State<ActivePollsNavigate> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.radius!),
+          borderRadius: BorderRadius.circular(widget.radius),
           color: widget.color,
         ),
         child: Padding(
@@ -71,7 +71,7 @@ class _ActivePollsNavigateState extends State<ActivePollsNavigate> {
                   ],
                 ),
               ),
-              IconButton(onPressed: widget.onTap, icon: SvgPicture.asset(widget.icon!)),
+              IconButton(onPressed: widget.onTap, icon: SvgPicture.asset(widget.icon)),
             ],
           ),
         ),

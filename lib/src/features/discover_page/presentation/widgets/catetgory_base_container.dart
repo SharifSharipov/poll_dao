@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 class SelectCategoryContainer extends StatelessWidget {
   final Widget child;

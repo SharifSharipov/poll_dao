@@ -9,16 +9,14 @@ import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_button.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/custom_new_poll_navigate.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/new_poll_text_field.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/select_question_type.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/text_widget.dart';
+import 'package:poll_dao/src/features/custom_sliver_example/presentation/widgets/last_widget.dart';
 import 'package:poll_dao/src/features/widgets/base_bottom_sheet.dart';
 
-import '../../../image_select/presentation/pages/image_select.dart';
+import '../../../../core/constants/answer_constants.dart';
 
 class CreatePollPage extends StatefulWidget {
-  const CreatePollPage({Key? key}) : super(key: key);
+  const CreatePollPage({super.key});
 
   @override
   State<CreatePollPage> createState() => _CreatePollPageState();
@@ -42,8 +40,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 
   void selectImage() async {
-    final List<XFile>? imageFiles = await pickImage.pickMultiImage();
-    if (imageFiles != null && imageFiles.isNotEmpty) {
+    final List<XFile> imageFiles = await pickImage.pickMultiImage();
+    if (imageFiles.isNotEmpty) {
       setState(() {
         imageFiles.addAll(imageFiles);
       });
@@ -74,37 +72,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Column(
-              children: [
-                15.ph,
-                customNewPollNavigate(context),
-                20.ph,
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: customTextWidget(text: "Question", color: AppColors.black),
-                  ),
-                ),
-                10.ph,
-                BaseNewPollTextField(
-                  hintText: 'Ask question  ',
-                  controller: controllerOne,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: customTextWidget(text: "Options", color: AppColors.black),
-                  ),
-                ),
-                10.ph,
-              ],
-            ),
+            child:lastedWidget(context: context, controllerOne:controllerOne),
           ),
           if (selecteddata == 1)
             SliverVisibility(
@@ -186,7 +154,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                             );
                           },
                           itemCount: textControllers.length,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                         ),
                       ],
@@ -330,7 +298,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                     );
                   },
                   itemCount: textControllers.length,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                 ),
               ),
@@ -383,7 +351,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                showAddOptions! ? 30.ph : 0.ph,
+                showAddOptions ? 30.ph : 0.ph,
                 AddOptions(
                   onTap: () {
                     showCupertinoDialog(
@@ -456,7 +424,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                   },
                 ),
                 30.ph,
-                AdvancedAudienceControl(),
+                const AdvancedAudienceControl(),
               ],
             ),
           )
@@ -466,34 +434,8 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 }
 
-List<String> answerList = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z"
-];
+
+
 /* showModalBottomSheet(
                                       isScrollControlled: true,
                                       backgroundColor: AppColors.white,

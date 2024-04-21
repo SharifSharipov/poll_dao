@@ -2,23 +2,28 @@ part of 'sign_up_bloc.dart';
 
 @immutable
 class SignUpState extends Equatable {
-  final String errorText;
-  final UniversalData data;
-  final UserModel userModel;
-  SignUpState({required this.errorText, required this.data, required this.userModel});
+  final String? statusText;
+  final FormStatus status;
+  final UserModel? userModel;
+
+  const SignUpState({
+    this.statusText,
+    this.status = FormStatus.pure,
+    this.userModel,
+  });
 
   SignUpState copyWith({
-    String? errorText,
-    UniversalData? data,
+    String? statusText,
+    FormStatus? status,
     UserModel? userModel,
   }) {
     return SignUpState(
-      errorText: errorText ?? this.errorText,
-      data: data ?? this.data,
+      statusText: statusText ?? this.statusText,
+      status: status ?? this.status,
       userModel: userModel ?? this.userModel,
     );
   }
 
   @override
-  List<Object?> get props => [errorText, data, userModel];
+  List<Object?> get props => [statusText, status, userModel];
 }

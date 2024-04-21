@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
-import 'package:poll_dao/src/features/active_polls_page/presentation/widget/cupertinoactionsheet.dart';
-import 'package:poll_dao/src/features/custom_sliver_example/presentation/pages/custom_scroll_view_example.dart';
-import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
-import 'package:poll_dao/src/features/local_auth/presentation/pages/loal_auth_page.dart';
+import 'package:poll_dao/src/features/experensive_page/pages/experensive_page.dart';
 import '../../../../core/colors/app_colors.dart';
-import '../../../image_select/presentation/pages/image_select.dart';
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -24,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const DisCoverPage();
+            return const ExpensivePage();
           },
         ),
       );

@@ -1,22 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/manager/cubits/index_cibit/index_cubit.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/pages/create_poll_page.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_button.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/select_question_type.dart';
-import 'package:poll_dao/src/features/widgets/base_bottom_sheet.dart';
 import '../../../../core/colors/app_colors.dart';
 
 class GeneRationTextField extends StatefulWidget {
   const GeneRationTextField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<GeneRationTextField> createState() => _GeneRationTextFieldState();
@@ -120,7 +114,7 @@ class _GeneRationTextFieldState extends State<GeneRationTextField> {
                             );
                           },
                           itemCount: textControllers.length,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                         ),
                       ],

@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 
 class ImageSelect extends StatefulWidget {
-  const ImageSelect({Key? key});
+  const ImageSelect({super.key});
 
   @override
   State<ImageSelect> createState() => _ImageSelectState();
@@ -19,8 +18,8 @@ class _ImageSelectState extends State<ImageSelect> {
   List<XFile?> imageFiles = [];
 
   void selectImage() async {
-    final List<XFile>? selectedImages = await pickImage.pickMultiImage();
-    if (selectedImages != null && selectedImages.isNotEmpty) {
+    final List<XFile> selectedImages = await pickImage.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
       setState(() {
         imageFiles.addAll(selectedImages);
       });

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData lightTheme=ThemeData(
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       ///display
       displayLarge: TextStyle(
         color: Colors.black,

@@ -6,7 +6,6 @@ import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/manager/cubits/index_cibit/index_cubit.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_button.dart';
-import 'package:poll_dao/src/features/widgets/base_bottom_sheet.dart';
 
 class ExperienceScreen extends StatefulWidget {
   const ExperienceScreen({super.key});
@@ -115,7 +114,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 );
                               },
                               itemCount: textControllers.length,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                             ),
                           ],

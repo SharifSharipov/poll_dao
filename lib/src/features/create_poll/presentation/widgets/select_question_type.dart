@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 class SelectQuestionWidget extends StatelessWidget {
   const SelectQuestionWidget(

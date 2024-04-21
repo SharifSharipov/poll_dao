@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import '../../../../core/colors/app_colors.dart';
 import 'answers.dart';
+
 class OptionsSelect extends StatefulWidget {
   final VoidCallback onTap;
   final String textOne;
@@ -9,15 +10,15 @@ class OptionsSelect extends StatefulWidget {
   final bool isSelected;
 
   const OptionsSelect({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.textOne,
     required this.textTwo,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   @override
-  _OptionsSelectState createState() => _OptionsSelectState();
+  State<OptionsSelect> createState() => _OptionsSelectState();
 }
 
 class _OptionsSelectState extends State<OptionsSelect> {
@@ -47,8 +48,8 @@ class _OptionsSelectState extends State<OptionsSelect> {
         ),
         child: Row(
           children: [
-           15.pw,
-            Answers(context,widget.textOne),
+            15.pw,
+            answers(context, widget.textOne),
             15.pw,
             Text(
               widget.textTwo,
