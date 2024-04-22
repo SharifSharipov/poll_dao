@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,6 +14,7 @@ class ActivePollsNavigate extends StatefulWidget {
   final double textSizeTwo;
   final FontWeight fontWeightTextOne;
   final FontWeight fontWeightTextTwo;
+  
   const ActivePollsNavigate({
     super.key,
     required this.radius,
@@ -42,7 +42,7 @@ class _ActivePollsNavigateState extends State<ActivePollsNavigate> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.radius!),
+          borderRadius: BorderRadius.circular(widget.radius),
           color: widget.color,
         ),
         child: Padding(
@@ -72,7 +72,7 @@ class _ActivePollsNavigateState extends State<ActivePollsNavigate> {
                   ],
                 ),
               ),
-              IconButton(onPressed: widget.onTap, icon: SvgPicture.asset(widget.icon!)),
+              IconButton(onPressed: widget.onTap, icon: SvgPicture.asset(widget.icon)),
             ],
           ),
         ),

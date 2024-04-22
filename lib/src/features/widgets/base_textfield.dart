@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
+
 class BaseTextField extends StatefulWidget {
   final String hintText;
   final String text;
   final String icon;
-  const BaseTextField({super.key, required this.hintText, required this.text, required this.icon});
+  final bool isObscure;
+  final TextEditingController? controller;
+  final bool isEditable;
+
+  const BaseTextField({
+    super.key,
+    required this.hintText,
+    required this.text,
+    required this.icon,
+    this.isObscure = false,
+    this.controller,
+    this.isEditable = true,
+  });
 
   @override
   State<BaseTextField> createState() => _BaseTextFieldState();
@@ -39,13 +52,20 @@ class _BaseTextFieldState extends State<BaseTextField> {
                 children: [
                   Text(
                     widget.text,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.c_5856D6),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.c_5856D6),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: TextField(
-                      controller: TextEditingController(),
+                      obscureText: widget.isObscure,
+                      controller: widget.controller,
+                      onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                      enabled: widget.isEditable,
+                      style: const TextStyle(
+                        color: AppColors.c_A0A4A7,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: widget.hintText,

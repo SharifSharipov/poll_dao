@@ -4,7 +4,6 @@ import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../../core/colors/app_colors.dart';
-
 class SelectedUnselected extends StatefulWidget {
   final bool isSelected;
   final VoidCallback onTap;
@@ -23,8 +22,8 @@ class _SelectedUnselectedState extends State<SelectedUnselected> {
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Container(
-          height: 36,
-          width: 36,
+          height: 28,
+          width: 28,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
               18,
@@ -34,7 +33,7 @@ class _SelectedUnselectedState extends State<SelectedUnselected> {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: SvgPicture.asset(
-                widget.isSelected ? AppImages.unSelectedLike : AppImages.selectedLike),
+                widget.isSelected ? AppImages.unSelectedLike : AppImages.selectedLike, width: 25, height: 25,),
           ),
         ),
       ),

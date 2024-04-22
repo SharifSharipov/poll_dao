@@ -17,12 +17,13 @@ class _ImageSelectState extends State<ImageSelect> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
         Image.asset(
           widget.icon,
-          height: height>1194? height * 0.4:height * 0.18,
-          width:width>834?width * 0.25 :width * 0.38   ,
+          height: height > 1194 ? height * 0.4:height * 0.18,
+          width: width > 834 ? width * 0.5 : width * 0.39   ,
         ),
         Positioned(
           bottom: 10,

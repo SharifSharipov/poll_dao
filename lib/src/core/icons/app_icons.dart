@@ -20,6 +20,9 @@ class AppImages {
   static const String sunflower = "assets/images/sunflower.png";
   static const String automobile = "assets/images/automobile.png";
   static const String yaxt = "assets/images/yaxt.png";
+  static const String daisy="assets/images/daisy.png";
+  static const String tulip="assets/images/tulip.png";
+  static const String flowerss="assets/images/flowerss.png";
 
   ///svg
   static const String add = "assets/svg/add.svg";
@@ -53,4 +56,12 @@ class AppImages {
   static const String nationality = "assets/svg/nationality.svg";
   static const String newPassword = "assets/svg/new_password.svg";
   static const String oldPassword = "assets/svg/old_password.svg";
+  static const String apple= "assets/svg/apple_logo.svg";
+  static const String google= "assets/svg/google_logo.svg";
+  static const String answerSelected = "assets/svg/answer_selected.svg";
+  static const String menu="assets/svg/menu.svg";
+  static const String votesOne="assets/svg/votes_one.svg";
+  static const String votesTwo="assets/svg/votes_two.svg";
+  static const String returnNer="assets/svg/returner.svg";
+  static const String deleteBlack="assets/svg/delete_black.svg";
 }
