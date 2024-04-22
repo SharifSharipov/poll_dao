@@ -1,87 +1,103 @@
-
 class ProfileModelFields {
-  static const String emailAddress = "email_address";
-  static const String username = "username";
+  static const String id = "id";
+  static const String maternalLang = "maternalLang";
   static const String age = "age";
+  static const String name = "name";
   static const String gender = "gender";
-  static const String externalEducationLevel = "external_education_level";
-  static const String language = "language";
   static const String location = "location";
+  static const String education = "education";
   static const String nationality = "nationality";
+  static const String biometryPassed = "biometryPassed";
+  static const String userId = "userId";
 }
 
 class ProfileModel {
-  final String emailAddress;
-  final String username;
+  final int id;
+  final dynamic maternalLang;
   final int age;
+  final String? name;
   final String gender;
-  final String externalEducationLevel;
-  final String language;
   final String location;
+  final String education;
   final String nationality;
-  ProfileModel(
-      {required this.emailAddress,
-        required this.username,
-        required this.age,
-        required this.gender,
-        required this.externalEducationLevel,
-        required this.language,
-        required this.location,
-        required this.nationality});
+  final dynamic biometryPassed;
+  final int userId;
+
+  ProfileModel({
+    required this.id,
+    required this.maternalLang,
+    required this.age,
+    this.name,
+    required this.gender,
+    required this.location,
+    required this.education,
+    required this.nationality,
+    required this.biometryPassed,
+    required this.userId,
+  });
+
   ProfileModel copyWith({
-    String? emailAddress,
-    String? username,
+    int? id,
+    dynamic maternalLang,
     int? age,
+    String? name,
     String? gender,
-    String? externalEducationLevel,
-    String? language,
     String? location,
+    String? education,
     String? nationality,
+    dynamic biometryPassed,
+    int? userId,
   }) {
     return ProfileModel(
-        emailAddress: emailAddress ?? this.emailAddress,
-        username: username ?? this.username,
+        id: id ?? this.id,
+        maternalLang: maternalLang ?? this.maternalLang,
         age: age ?? this.age,
+        name: name ?? this.name,
         gender: gender ?? this.gender,
-        externalEducationLevel: externalEducationLevel ?? this.externalEducationLevel,
-        language: language ?? this.language,
         location: location ?? this.location,
-        nationality: nationality ?? this.nationality);
+        education: education ?? this.education,
+        nationality: nationality ?? this.nationality,
+        biometryPassed: biometryPassed ?? this.biometryPassed,
+        userId: userId ?? this.userId);
   }
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    return ProfileModel(
-        emailAddress: json[ProfileModelFields.emailAddress] as String? ?? "",
-        username: json[ProfileModelFields.username] as String? ?? "",
+  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
+        id: json[ProfileModelFields.id] as int? ?? 0,
+        maternalLang: json[ProfileModelFields.maternalLang],
         age: json[ProfileModelFields.age] as int? ?? 0,
+        name: json[ProfileModelFields.name] as String? ?? "",
         gender: json[ProfileModelFields.gender] as String? ?? "",
-        externalEducationLevel: json[ProfileModelFields.externalEducationLevel] as String? ?? "",
-        language: json[ProfileModelFields.language] as String? ?? "",
         location: json[ProfileModelFields.location] as String? ?? "",
-        nationality: json[ProfileModelFields.nationality] as String? ?? "");
-  }
-  Map<String,dynamic>toJson()=>{
-    ProfileModelFields.emailAddress:emailAddress,
-    ProfileModelFields.username:username,
-    ProfileModelFields.age:age,
-    ProfileModelFields.gender:gender,
-    ProfileModelFields.externalEducationLevel:externalEducationLevel,
-    ProfileModelFields.language:language,
-    ProfileModelFields.location:location,
-    ProfileModelFields.nationality:nationality
-  };
+        education: json[ProfileModelFields.education] as String? ?? "",
+        nationality: json[ProfileModelFields.nationality] as String? ?? "",
+        biometryPassed: json[ProfileModelFields.biometryPassed],
+        userId: json[ProfileModelFields.userId] as int? ?? 0,
+      );
 
-  @override
-  String toString() {
-    return """
-    ${ProfileModelFields.emailAddress}:$emailAddress,
-    ${ProfileModelFields.username}:$username,
-    ${ProfileModelFields.age}:$age,
-    ${ProfileModelFields.gender}:$gender,
-    ${ProfileModelFields.externalEducationLevel}:$externalEducationLevel,
-    ${ProfileModelFields.language}:$language,
-    ${ProfileModelFields.location}:$location,
-    ${ProfileModelFields.nationality}:$nationality
-    """;
-  }
+  Map<String, dynamic> toJson() => {
+        ProfileModelFields.id: id,
+        ProfileModelFields.maternalLang: maternalLang,
+        ProfileModelFields.age: age,
+        ProfileModelFields.name: name,
+        ProfileModelFields.gender: gender,
+        ProfileModelFields.location: location,
+        ProfileModelFields.education: education,
+        ProfileModelFields.nationality: nationality,
+        ProfileModelFields.biometryPassed: biometryPassed,
+        ProfileModelFields.userId: userId,
+      };
+
+  ProfileModel.empty()
+      : this(
+          id: 0,
+          maternalLang: "",
+          age: 0,
+          name: "",
+          gender: "",
+          location: "",
+          education: "",
+          nationality: "",
+          biometryPassed: "",
+          userId: 0,
+        );
 }

@@ -1,26 +1,19 @@
 part of 'sign_in_bloc.dart';
 
+@immutable
 class SignInState extends Equatable {
- final String statusText;
- final FormStatus status;
- final SignInModel signInModel;
- const SignInState({
-  required this.statusText,
-  required this.status,
-  required this.signInModel,});
-  SignInState copyWith({
-    String? statusText,
-    FormStatus? status,
-    SignInModel? signInModel,
-  }) {
+  final FormStatus? status;
+  final String? statusText;
+  final SignInModel? signInModel;
+  SignInState({this.status = FormStatus.pure, this.statusText, this.signInModel});
+
+  SignInState copyWith({FormStatus? status, String? statusText, SignInModel? signInModel}) {
     return SignInState(
-      statusText: statusText ?? this.statusText,
       status: status ?? this.status,
+      statusText: statusText ?? this.statusText,
       signInModel: signInModel ?? this.signInModel,
     );
   }
-
   @override
-  // TODO: implement props
-  List<Object?> get props => [statusText,status,signInModel];
+  List<Object?> get props => [status, statusText, signInModel];
 }

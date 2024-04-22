@@ -11,6 +11,7 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/select_qu
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/category_select.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/options_answer.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/widgets/show_dialog.dart';
+import 'package:poll_dao/src/features/profile_page/domain/service/service.dart';
 import 'package:poll_dao/src/features/profile_page/presentation/pages/profile_page.dart';
 import 'package:poll_dao/src/features/sign_in_page/presentation/pages/sign_in_page.dart';
 import 'package:poll_dao/src/features/sign_up_page/presentation/pages/sign_up_page.dart';
@@ -30,6 +31,16 @@ class _DisCoverPageState extends State<DisCoverPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+   /*   floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Service().sendProfileData(oldPassword: '12345678', newPassword: 'newPassword').then((value) {
+            print(value);
+          }).onError((error, stackTrace) {
+            print(error.toString()+" "+stackTrace.toString());
+
+          });
+        }
+      ),*/
       backgroundColor:const Color(0xffF0F3FA),
       appBar: AppBar(
           elevation: 0,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/config/routes/routes.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/nationality_page/presentation/widgets/nationality_widget.dart';
 import '../../../../core/constants/nationality_list.dart';
+import '../../../profile_page/presentation/manager/fetch_profile_data_bloc/fetch_profile_data_bloc.dart';
 class NationalityPage extends StatefulWidget {
   const NationalityPage({super.key});
 
@@ -37,7 +39,10 @@ class _NationalityPageState extends State<NationalityPage> {
         ),
         itemBuilder: (context, index) => NationalityWidget(
           text: countries[index],
-          onTap: () {},
+          onTap: () {
+            context.read<FetchProfileDataBloc>().add(UpdateNationality(nationality: countries[index]));
+            Navigator.pop(context);
+          },
         ),
       ),
     );

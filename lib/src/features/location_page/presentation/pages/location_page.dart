@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/config/routes/routes.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/location_page/presentation/widgets/location_widget.dart';
+import 'package:poll_dao/src/features/profile_page/presentation/manager/fetch_profile_data_bloc/fetch_profile_data_bloc.dart';
 
 import '../../../../core/constants/nationality_list.dart';
 class LocationPage extends StatefulWidget {
@@ -38,7 +40,10 @@ class _LocationPageState extends State<LocationPage> {
         ),
         itemBuilder: (context, index) => LocationWidget(
           text: countries[index],
-          onTap: () {},
+          onTap: () {
+            context.read<FetchProfileDataBloc>().add(UpdateLocation(location: countries[index]));
+            Navigator.pop(context);
+          },
         ),
       ),
     );

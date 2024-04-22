@@ -1,17 +1,10 @@
 part of 'sign_in_bloc.dart';
 
-abstract class SignInEvent extends Equatable {}
-
-class SignInButtonPressed extends SignInEvent {
-  final String email;
-  final String password;
-  SignInButtonPressed({
-    required this.email,
-    required this.password,
-  });
-
-  @override
-  List<Object?> get props => [email, password];
+@immutable
+sealed class SignInEvent {}
+class SignInButtonPressed extends SignInEvent {}
+class SingInErrorPressed extends SignInEvent {
+  final String errorText;
+  SingInErrorPressed({required this.errorText});
 }
-
-// Add more events as needed
+class SignInSuccessPressed extends SignInEvent {}

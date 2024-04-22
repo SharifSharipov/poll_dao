@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/status.dart';
+import 'package:poll_dao/src/features/widget_servers/status/status.dart';
 import 'package:poll_dao/src/features/sign_up_page/data/repositories/sign_up_repository.dart';
 import 'package:poll_dao/src/features/sign_up_page/domain/service/service.dart';
 import 'package:poll_dao/src/features/sign_up_page/presentation/manager/sign_up_bloc/sign_up_bloc.dart';

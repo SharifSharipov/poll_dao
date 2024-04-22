@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:poll_dao/src/core/constants/server_constants.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/user_model.dart';
+import 'package:poll_dao/src/features/sign_in_page/data/models/sign_in_model.dart';
 import 'package:poll_dao/src/features/widget_servers/loger_service/loger.dart';
 import 'package:poll_dao/src/features/widget_servers/repositories/storage_repository.dart';
 import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
 
-class ApiService {
+class Service {
   final _dio = Dio(
     BaseOptions(
       headers: {"Content-Type": "application/json"},
@@ -40,17 +40,20 @@ class ApiService {
     );
   }
 
-  Future<UniversalData> sendSignUpRequest({required String email,required  String password,required  String name}) async {
+  Future<UniversalData> sendLoginRequest({required String email, required String password}) async {
     Response response;
     try {
-      response = await _dio.post("http://94.131.10.253:3000/auth/sign-up", data: {
+      response = await _dio.post("http://94.131.10.253:3000/auth/login", data: {
         "email": email,
         'password': password,
-        'name': name,
       });
+
+      if (response.data["token"] != null) {
+        StorageRepository.putString("token", response.data["token"]);
+      }
       LoggerService.i("Response=>$response");
       LoggerService.e("Response=>${response.data}");
-      return UniversalData(data: UserModel.fromJson(response.data));
+      return UniversalData(data: SignInModel.fromJson(response.data));
     } on DioException catch (e) {
       return UniversalData(error: e.response!.data.toString());
     } catch (e) {

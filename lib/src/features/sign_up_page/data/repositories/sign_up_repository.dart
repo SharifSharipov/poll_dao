@@ -1,4 +1,4 @@
-import 'package:poll_dao/src/features/sign_in_page/data/models/universaldata.dart';
+import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
 
 import '../../domain/service/service.dart';
 

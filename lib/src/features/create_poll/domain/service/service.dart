@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:poll_dao/src/core/constants/server_constants.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/user_model.dart';
-import 'package:poll_dao/src/features/widget_servers/loger_service/loger.dart';
-import 'package:poll_dao/src/features/widget_servers/repositories/storage_repository.dart';
-import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
+import 'package:poll_dao/src/features/create_poll/data/models/create_poll_model.dart';
 
-class ApiService {
+import '../../../widget_servers/loger_service/loger.dart';
+import '../../../widget_servers/repositories/storage_repository.dart';
+import '../../../widget_servers/universal_data/universaldata.dart';
+
+class Service {
   final _dio = Dio(
     BaseOptions(
       headers: {"Content-Type": "application/json"},
@@ -39,20 +40,30 @@ class ApiService {
       ),
     );
   }
-
-  Future<UniversalData> sendSignUpRequest({required String email,required  String password,required  String name}) async {
+  Future<UniversalData> sendPollRequest(
+      {required int id,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      required String name,
+      required int topic,
+      required int author,
+      required bool archived}) async {
     Response response;
     try {
-      response = await _dio.post("http://94.131.10.253:3000/auth/sign-up", data: {
-        "email": email,
-        'password': password,
-        'name': name,
+      response = await _dio.put("http://94.131.10.253:3000/poll/create", data: {
+        "id": id,
+        "createdAt": "2024-04-24T20:31:06.599Z",
+        "updatedAt": "2024-04-24T20:31:06.599Z",
+        "name": "Is it good in China?",
+        "authorId": 24,
+        "topicId": 3,
+        "archived": false,
       });
       LoggerService.i("Response=>$response");
       LoggerService.e("Response=>${response.data}");
-      return UniversalData(data: UserModel.fromJson(response.data));
+      return UniversalData(data: CreatePollModel.fromJson(response.data));
     } on DioException catch (e) {
-      return UniversalData(error: e.response!.data.toString());
+      return UniversalData(error: e.response!.data["message"]);
     } catch (e) {
       return UniversalData(error: e.toString());
     }

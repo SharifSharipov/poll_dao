@@ -1,10 +1,10 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:poll_dao/src/features/sign_in_page/data/models/universaldata.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/status.dart';
+import 'package:poll_dao/src/features/widget_servers/status/status.dart';
 import 'package:poll_dao/src/features/sign_up_page/data/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
 import '../../../data/repositories/sign_up_repository.dart';
 
 part 'sign_up_event.dart';

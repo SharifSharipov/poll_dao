@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:poll_dao/src/core/constants/server_constants.dart';
-import 'package:poll_dao/src/features/sign_up_page/data/models/user_model.dart';
+import 'package:poll_dao/src/features/profile_page/data/models/change_password.dart';
+import 'package:poll_dao/src/features/profile_page/data/models/profile_model.dart';
 import 'package:poll_dao/src/features/widget_servers/loger_service/loger.dart';
 import 'package:poll_dao/src/features/widget_servers/repositories/storage_repository.dart';
 import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
 
-class ApiService {
+class Service {
   final _dio = Dio(
     BaseOptions(
       headers: {"Content-Type": "application/json"},
@@ -40,20 +41,74 @@ class ApiService {
     );
   }
 
-  Future<UniversalData> sendSignUpRequest({required String email,required  String password,required  String name}) async {
+  Future<UniversalData> fetchProfileData() async {
     Response response;
     try {
-      response = await _dio.post("http://94.131.10.253:3000/auth/sign-up", data: {
-        "email": email,
-        'password': password,
-        'name': name,
-      });
+      response = await _dio.get("http://94.131.10.253:3000/settings/profile/me");
       LoggerService.i("Response=>$response");
       LoggerService.e("Response=>${response.data}");
-      return UniversalData(data: UserModel.fromJson(response.data));
+      return UniversalData(data: ProfileModel.fromJson(response.data));
     } on DioException catch (e) {
       return UniversalData(error: e.response!.data.toString());
     } catch (e) {
+      return UniversalData(error: e.toString());
+    }
+  }
+
+  Future<UniversalData> putProfileData(
+      {required String location,
+      required int age,
+      required String name,
+      required String education}) async {
+    Response response;
+    try {
+      response = await _dio.put("http://94.131.10.253:3000/settings/profile/update", data: {
+        "location": location,
+        "age": age,
+        "name": name,
+        "education": education,
+      },
+      options: Options(
+        headers: {"access-token": r'$2b$10$Lh5sRYW4z1ME.mHHvTe3ruaFY2Hlpr0x1hbMzK4PqxonpbhIlU62a'},
+      )
+      );
+      LoggerService.i("Response=>$response");
+      LoggerService.e("Response=>${response.data}");
+      LoggerService.d("Response=>${response.data.hashCode}");
+      return UniversalData(data: ProfileModel.fromJson(response.data));
+    } on DioException catch (e) {
+      print("DIO ERROR=>${e.response!.data}");
+      return UniversalData(error: e.response!.data.toString());
+    } catch (e) {
+      print("DIO ERROR=>${e}");
+      return UniversalData(error: e.toString());
+    }
+  }
+
+  Future<UniversalData> sendProfileData(
+      {required String oldPassword, required String newPassword}) async {
+    Response response;
+    try {
+      response = await _dio.put(
+        "http://94.131.10.253:3000/settings/profile/change-password",
+        data: {
+          "old_password": oldPassword,
+          "new_password": newPassword,
+        },
+        options: Options(
+          headers: {"access-token": r'$2b$10$Lh5sRYW4z1ME.mHHvTe3ruaFY2Hlpr0x1hbMzK4PqxonpbhIlU62a'},
+        )
+      );
+      LoggerService.i("Response=>$response");
+      LoggerService.e("Response=>${response.data}");
+      LoggerService.d("Response=>${response.data.hashCode}");
+      print("Response=>${response.data}");
+      return UniversalData(data: ChangePasswordModel.fromJson(response.data));
+    } on DioException catch (e) {
+      print("DIO ERROR=>${e.response!.data}");
+      return UniversalData(error: e.response!.data.toString());
+    } catch (e) {
+      print("ASOLUT POXUY ERROR=>${e}");
       return UniversalData(error: e.toString());
     }
   }

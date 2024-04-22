@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/config/routes/routes.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
 import 'package:poll_dao/src/core/constants/coursy_of_study_list.dart';
 import 'package:poll_dao/src/features/education_level_page/presentation/widgets/education_level_widget.dart';
+import 'package:poll_dao/src/features/profile_page/presentation/manager/fetch_profile_data_bloc/fetch_profile_data_bloc.dart';
 class EducationLevelPage extends StatelessWidget {
   const EducationLevelPage({super.key});
   @override
@@ -34,7 +36,10 @@ class EducationLevelPage extends StatelessWidget {
         ),
         itemBuilder: (context, index) => EducationLevelWidget(
           text: educationCourses[index],
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+             context.read<FetchProfileDataBloc>().add(UpdateEducation( education: educationCourses[index]));
+          },
         ),
       ),
     );
