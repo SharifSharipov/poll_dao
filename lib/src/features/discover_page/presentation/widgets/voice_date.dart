@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
-
 import '../../../../core/colors/app_colors.dart';
-
 class VoiceData extends StatefulWidget {
   final String textOne;
   final String textTwo;

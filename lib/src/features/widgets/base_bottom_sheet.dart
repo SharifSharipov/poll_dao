@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class BaseBottomSheet extends StatefulWidget {
   const BaseBottomSheet({
-    Key? key,
+    super.key,
     required this.height,
-    required this.child,
-  }) : super(key: key);
+    required this.child, required this.backgroundColor,
+  });
   final CustomScrollView child;
   final double height;
+  final Color backgroundColor;
 
   @override
   State<BaseBottomSheet> createState() => _BaseBottomSheetState();
@@ -25,7 +26,7 @@ class _BaseBottomSheetState extends State<BaseBottomSheet> {
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(20),
         ),
-        color: Theme.of(context).canvasColor,
+        color: widget.backgroundColor,
       ),
       child: widget.child
     );

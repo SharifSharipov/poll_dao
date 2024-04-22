@@ -9,12 +9,12 @@ class RegisterTextField extends StatelessWidget {
   final String textTwo;
   final String icon;
   const RegisterTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.textOne,
     required this.textTwo,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/features/onboarding_page/presentation/widgets/question_two/selected_unselected.dart';
-import '../../../../../core/icons/app_icons.dart';
 
 class ImageSelect extends StatefulWidget {
   final bool isSelected;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
-import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
+import 'package:poll_dao/src/features/experensive_page/pages/experensive_page.dart';
 import '../../../../core/colors/app_colors.dart';
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const DisCoverPage();
+            return const ExpensivePage();
           },
         ),
       );

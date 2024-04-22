@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:poll_dao/src/config/routes/routes.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:poll_dao/src/core/extentions/extentions.dart';
 
-Future<void> main()async {
+import 'src/config/routes/routes.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations(
@@ -21,170 +26,87 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: RouteNames.discoverPage,
+      //home: NewPollPage(),
+      initialRoute: RouteNames.splashPage,
       onGenerateRoute: AppRoutes.generateRoute,
     );
-
   }
 }
 
-/*import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/icons/app_icons.dart';
-
-/// Flutter code sample for [ExpansionTile].
-
-void main() => runApp(const ExpansionTileApp());
-
-class ExpansionTileApp extends StatelessWidget {
-  const ExpansionTileApp({super.key});
+class ImageExternal extends StatefulWidget {
+  const ImageExternal({super.key});
 
   @override
+  State<ImageExternal> createState() => _ImageExternalState();
+}
+
+class _ImageExternalState extends State<ImageExternal> {
+  final pickImage = ImagePicker();
+  File? imageFile;
+  Future pickImageFromGallery() async {
+    final image = await pickImage.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    if(image == null) return;
+    setState(() {
+      imageFile = File(image.path);
+        });
+  }
+  Future pickImageFromCamera() async {
+    final image = await pickImage.pickImage(source: ImageSource.camera, imageQuality: 80);
+    if(image == null) return;
+    setState(() {
+      imageFile = File(image.path);
+        });
+  }
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('ExpansionTile Sample')),
-        body: const ExpansionTileExample(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("External image"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(onPressed: () {
+              pickImageFromGallery();
+            }, child: const Text("Image from gallery")),
+            TextButton(onPressed: () {
+              pickImageFromCamera();
+            }, child: const Text("Image from Camera")),
+            imageFile == null ? const Text("No image selected") : Image.file(imageFile!.absolute,fit: BoxFit.cover,),
+            imageFile == null ? const Text("No image selected") : Image.file(imageFile!.absolute,fit: BoxFit.cover,),
+            InkWell(
+              onTap: () {
+                pickImageFromGallery();
+              },
+              child:Container(
+                height: 200,
+                width: 400,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 4.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child:  imageFile != null
+                    ? Image.file(imageFile!.absolute,fit: BoxFit.cover,)
+                    : const Center(child: Icon(Icons.add_photo_alternate_outlined,size: 60,),),
+              ),
+            ),
+            20.ph,
+          ],
+        ),
       ),
     );
   }
 }
+/*  Future<void> _pickImage() async {
+    XFile? pickedFile = await pickImage;
+    setState(() {
+      _imageFile = pickedFile;
+    });
+  }*/
 
-class ExpansionTileExample extends StatefulWidget {
-  const ExpansionTileExample({super.key});
-
-  @override
-  State<ExpansionTileExample> createState() => _ExpansionTileExampleState();
-}
-
-class _ExpansionTileExampleState extends State<ExpansionTileExample> {
-  bool _customTileExpanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const ExpansionTile(
-          title: Text('ExpansionTile 1'),
-          subtitle: Text('Trailing expansion arrow icon'),
-          children: <Widget>[
-            ListTile(title: Text('This is tile number 1')),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColors.c_F0F3FA,
-            ),
-            child: ListTile(
-              leading: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.white,
-                ),
-                child: Center(
-                    child: SvgPicture.asset(
-                  AppImages.gender,
-                  width: 30,
-                  height: 30,
-                )),
-              ),
-              title: const Text('ExpansionTile 2'),
-              subtitle: const Text('Trailing expansion arrow icon'),
-              trailing: _customTileExpanded
-                  ? RotatedBox(
-                      quarterTurns: 1,
-                      child: SvgPicture.asset(
-                        "assets/svg/arrow_back_ios_right.svg",
-                        height: 24,
-                        width: 24,
-                      ))
-                  : SvgPicture.asset(
-                      "assets/svg/arrow_back_ios_right.svg",
-                      height: 24,
-                      width: 24,
-                    ),
-              selected: false,
-              enabled: false,
-              onTap: () {
-                _customTileExpanded = !_customTileExpanded;
-                setState(() {});
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 20
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColors.c_F0F3FA,
-            ),
-            child: ExpansionTile(
-              shape: RoundedRectangleBorder(
-                side: BorderSide.none,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              maintainState: true,
-              enableFeedback: true,
-              backgroundColor: AppColors.c_F0F3FA,
-              leading: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.white,
-                ),
-                child: Center(
-                    child: SvgPicture.asset(
-                  AppImages.gender,
-                  width: 30,
-                  height: 30,
-                )),
-              ),
-              title: const Text('ExpansionTile 2'),
-              subtitle: const Text('Custom expansion arrow icon'),
-              trailing: _customTileExpanded
-                  ? RotatedBox(
-                      quarterTurns: 1,
-                      child: SvgPicture.asset(
-                        "assets/svg/arrow_back_ios_right.svg",
-                        height: 24,
-                        width: 24,
-                      ))
-                  : SvgPicture.asset(
-                      "assets/svg/arrow_back_ios_right.svg",
-                      height: 24,
-                      width: 24,
-                    ),
-              children: const <Widget>[
-                ListTile(title: Text('This is tile number 2')),
-              ],
-              onExpansionChanged: (bool expanded) {
-                setState(() {
-                  _customTileExpanded = expanded;
-                });
-              },
-            ),
-          ),
-        ),
-        const ExpansionTile(
-          title: Text('ExpansionTile 3'),
-          subtitle: Text('Leading expansion arrow icon'),
-          controlAffinity: ListTileControlAffinity.leading,
-          children: <Widget>[
-            ListTile(title: Text('This is tile number 3')),
-          ],
-        ),
-      ],
-    );
-  }
-}*/
+/*  Future<void> _uploadImage() async {
+    String? downloadUrl = await uploadImageToFirebase(_imageFile);
+    setState(() {
+      _imageUrl = downloadUrl;
+    });
+  }*/
