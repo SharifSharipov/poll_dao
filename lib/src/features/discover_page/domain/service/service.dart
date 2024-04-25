@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:poll_dao/src/core/constants/server_constants.dart';
-import 'package:poll_dao/src/features/create_poll/data/models/create_poll_model.dart';
-
-import '../../../widget_servers/loger_service/loger.dart';
-import '../../../widget_servers/repositories/storage_repository.dart';
-import '../../../widget_servers/universal_data/universaldata.dart';
+import 'package:poll_dao/src/features/discover_page/data/models/data_cetegory_model.dart';
+import 'package:poll_dao/src/features/widget_servers/loger_service/loger.dart';
+import 'package:poll_dao/src/features/widget_servers/repositories/storage_repository.dart';
+import 'package:poll_dao/src/features/widget_servers/universal_data/universaldata.dart';
 
 class Service {
   final _dio = Dio(
@@ -16,11 +15,9 @@ class Service {
       sendTimeout: Duration(seconds: TimeOutConstants.sendTimeout),
     ),
   );
-
   ApiService() {
     _init();
   }
-
   _init() {
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -40,30 +37,17 @@ class Service {
       ),
     );
   }
-  Future<UniversalData> sendPollRequest(
-      {required int id,
-      required DateTime createdAt,
-      required DateTime updatedAt,
-      required String name,
-      required int topic,
-      required int author,
-      required bool archived}) async {
+
+  Future<UniversalData> fetchData() async {
     Response response;
     try {
-      response = await _dio.put("http://94.131.10.253:3000/poll/create", data: {
-        "id": id,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
-        "name": name,
-        "authorId":author,
-        "topicId":topic,
-        "archived": archived,
-      });
+      response = await _dio.get("http://94.131.10.253:3000/public/topics");
       LoggerService.i("Response=>$response");
       LoggerService.e("Response=>${response.data}");
-      return UniversalData(data: CreatePollModel.fromJson(response.data));
+      return UniversalData(
+          data: (response.data as List).map((e) => DataCategoryModel.fromJson(e)).toList());
     } on DioException catch (e) {
-      return UniversalData(error: e.response!.data["message"]);
+      return UniversalData(error: getDioCustomError(e).error);
     } catch (e) {
       return UniversalData(error: e.toString());
     }

@@ -100,11 +100,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
+import 'package:poll_dao/src/features/create_poll/presentation/pages/experense.dart';
 import 'package:poll_dao/src/features/profile_page/domain/repositories/repository.dart';
 import 'package:poll_dao/src/features/profile_page/domain/service/service.dart';
 import 'package:poll_dao/src/features/profile_page/presentation/manager/fetch_profile_data_bloc/fetch_profile_data_bloc.dart';
 
 import 'src/config/routes/routes.dart';
+import 'src/features/create_data/presentation/pages/create_data.dart';
+import 'src/features/pokayfu_data/pokayfu_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -127,9 +130,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: NewPollPage(),
-      initialRoute: RouteNames.splashPage,
-      onGenerateRoute: AppRoutes.generateRoute,
+   home: CreateData (),
+     /* initialRoute: RouteNames.splashPage,
+      onGenerateRoute: AppRoutes.generateRoute,*/
     ),
 );
   }

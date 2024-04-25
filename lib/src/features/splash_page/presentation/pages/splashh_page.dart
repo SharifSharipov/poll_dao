@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
+import 'package:poll_dao/src/features/create_poll/presentation/pages/create_poll_page.dart';
+import 'package:poll_dao/src/features/create_poll/presentation/pages/experense.dart';
 import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
 import 'package:poll_dao/src/features/experensive_page/pages/experensive_page.dart';
+import 'package:poll_dao/src/features/profile_page/presentation/pages/profile_page.dart';
 import '../../../../core/colors/app_colors.dart';
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

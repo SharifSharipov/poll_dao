@@ -26,7 +26,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   TextEditingController controllerOne = TextEditingController();
   TextEditingController controllerTwo = TextEditingController();
   List<TextEditingController> textControllers = [TextEditingController()];
-  List<File?> imageFiles = [null];
+  List<File> imageFiles = [];
   final pickImage = ImagePicker();
   bool showAddOptions = true;
   int selecteddata = 0;
@@ -40,10 +40,10 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 
   void selectImage() async {
-    final List<XFile> imageFiles = await pickImage.pickMultiImage();
-    if (imageFiles.isNotEmpty) {
+     List<XFile> imageFilesFromGallery = await pickImage.pickMultiImage();
+    if (imageFilesFromGallery.isNotEmpty) {
       setState(() {
-        imageFiles.addAll(imageFiles);
+        imageFiles.addAll(imageFilesFromGallery.map((e) => File(e.path)));
       });
     }
   }
@@ -58,7 +58,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
   void initState() {
     super.initState();
     textControllers = [TextEditingController()];
-    imageFiles = [null];
+    imageFiles = [];
   }
 
   @override
@@ -203,7 +203,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                                             value.isNotEmpty) {
                                           setState(() {
                                             textControllers.add(TextEditingController());
-                                            imageFiles.add(null); // Add null for new image file
+                                            // imageFiles.add(null); // Add null for new image file
                                           });
                                         }
                                       },
@@ -251,7 +251,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                                     imageFiles[index] != null
                                         ? Center(
                                             child: Image.file(
-                                              imageFiles[index]!,
+                                              imageFiles[index],
                                               fit: BoxFit.cover,
                                               width: double.infinity,
                                             ),
@@ -279,7 +279,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          imageFiles[index] = null;
+                                          imageFiles.removeAt(index);
                                         });
                                       },
                                       icon: SvgPicture.asset(
@@ -314,7 +314,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.file(
-                            File(imageFiles[index]!.path),
+                            File(imageFiles[index].path),
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
@@ -354,7 +354,7 @@ class _CreatePollPageState extends State<CreatePollPage> {
                 showAddOptions ? 30.ph : 0.ph,
                 AddOptions(
                   onTap: () {
-                    showCupertinoDialog(
+                    showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return Center(
