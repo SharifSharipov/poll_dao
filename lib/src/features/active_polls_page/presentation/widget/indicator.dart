@@ -7,8 +7,15 @@ class ChargePercentageIndicator extends StatefulWidget {
   final int chargePercentage;
   final String option;
   final String text;
+  final bool selected;
 
-  const ChargePercentageIndicator({super.key, required this.chargePercentage, required this.option, required this.text});
+  const ChargePercentageIndicator({
+    super.key, 
+    required this.chargePercentage, 
+    required this.option, 
+    required this.text, 
+    required this.selected
+  });
 
   @override
   State<ChargePercentageIndicator> createState() => _ChargePercentageIndicatorState();
@@ -40,13 +47,13 @@ class _ChargePercentageIndicatorState extends State<ChargePercentageIndicator> {
               width: (height / 23.15),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  color: tap ? AppColors.c_5B6D83.withOpacity(0.1) : AppColors.c_5856D6
+                  color: !widget.selected ? AppColors.c_5B6D83.withOpacity(0.1) : AppColors.c_5856D6
                       ),
               child: Center(
                   child: Text(
                 widget.option,
                 style: TextStyle(
-                    color: tap ? AppColors.c_5856D6 : AppColors.white,
+                    color: !widget.selected ? AppColors.c_5856D6 : AppColors.white,
                     fontSize: (height / 48.7),
                     fontWeight: FontWeight.bold),
               )),
@@ -79,7 +86,7 @@ class _ChargePercentageIndicatorState extends State<ChargePercentageIndicator> {
                     borderRadius: BorderRadius.circular(5),
                     backgroundColor: Colors.transparent,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        tap ? AppColors.c_5B6D83.withOpacity(0.1) : AppColors.c_5856D6),
+                        !widget.selected ? AppColors.c_5B6D83.withOpacity(0.1) : AppColors.c_5856D6),
                     value: widget.chargePercentage / 100.0,
                   ),
                 ),

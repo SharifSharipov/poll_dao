@@ -14,8 +14,6 @@ import 'package:poll_dao/src/features/create_poll/presentation/manager/cubits/in
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/select_question_type.dart';
 
-import '../../../create_poll/presentation/pages/experense.dart';
-
 class CreateData extends StatefulWidget {
   const CreateData({super.key});
 
@@ -49,14 +47,16 @@ class _CreateDataState extends State<CreateData> {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  InsertTextFields(controllerList: controller, index: index, onTapOne: (){}, onTapTwo: (){}),
+                  // InsertTextFields(controllerList: controller, index: index,  onTapTwo: (){}),
                   ...widgetList,
                   20.ph,
-                /*  AddOptions(
+                  AddOptions(
                     onTap: () async {
                       if (widgetList.isNotEmpty) {
                         switch (answerType!) {
                           case AnswerType.text:
+                            InsertTextFields(
+                                controllerList: controller, index: index, onTapTwo: () {});
                             controller.add(TextEditingController());
                             break;
                           case AnswerType.imageText:
@@ -66,7 +66,9 @@ class _CreateDataState extends State<CreateData> {
                               count: state,
                             ));
                         }
-                        setState(() {});
+                        setState(() {
+
+                        });
                         return;
                       }
                       showDialog(
@@ -90,18 +92,18 @@ class _CreateDataState extends State<CreateData> {
                                         ),
                                       ),
                                     ],
-                                    onTap: ()  async {
-                                        answerType = AnswerType.text;
-                                    *//*    widgetList.add(InsertTextFields(
-                                          controllerList: controller,
-                                          index: state,
-                                          onTapOne: () {},
-                                          onTapTwo: () {},
-                                        ));*//*
-                                        controller.add(TextEditingController());
-                                        context.read<IndexCubit>().increment();
-                                        setState(() {});
-                                        Navigator.pop(context);
+                                    onTap: () async {
+                                      answerType = AnswerType.text;
+                                      widgetList.add(InsertTextFields(
+                                        controllerList: controller,
+                                        index: state,
+                                        onTapTwo: () {},
+                                      ));
+                                      controller.add(TextEditingController());
+                                      //context.read<IndexCubit>().increment();
+                                      setState(() {});
+                                      print("onTap Pop");
+                                      Navigator.pop(context);
                                     },
                                   ),
                                   0.1.ph,
@@ -119,13 +121,13 @@ class _CreateDataState extends State<CreateData> {
                                       SvgPicture.asset(AppImages.imageSelect),
                                     ],
                                     onTap: () {
-                                        answerType = AnswerType.imageText;
-                                        widgetList.add(InsertTextImageFilds(
-                                          onTapOne: () {},
-                                          controller: controller[state],
-                                          count: state,
-                                        ));
-                                        Navigator.pop(context);
+                                      answerType = AnswerType.imageText;
+                                      widgetList.add(InsertTextImageFilds(
+                                        onTapOne: () {},
+                                        controller: controller[state],
+                                        count: state,
+                                      ));
+                                      Navigator.pop(context);
                                     },
                                   ),
                                 ],
@@ -135,8 +137,8 @@ class _CreateDataState extends State<CreateData> {
                         },
                       );
                     },
-                  ),*/
-                  AddOptions(
+                  ),
+                  /*    AddOptions(
                     onTap: () {
                       controller.add(TextEditingController());
                       widgetList.add(InsertTextImageFilds(
@@ -146,7 +148,7 @@ class _CreateDataState extends State<CreateData> {
                       ));
                       context.read<IndexCubit>().increment();
                     },
-                  ),
+                  ),*/
                 ],
               ),
             );

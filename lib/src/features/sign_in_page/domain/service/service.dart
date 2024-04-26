@@ -16,7 +16,7 @@ class Service {
     ),
   );
 
-  ApiService() {
+  Service() {
     _init();
   }
 
@@ -51,8 +51,8 @@ class Service {
       if (response.data["token"] != null) {
         StorageRepository.putString("token", response.data["token"]);
       }
+      
       LoggerService.i("Response=>$response");
-      LoggerService.e("Response=>${response.data}");
       return UniversalData(data: SignInModel.fromJson(response.data));
     } on DioException catch (e) {
       return UniversalData(error: e.response!.data.toString());

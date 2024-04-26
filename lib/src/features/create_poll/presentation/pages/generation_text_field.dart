@@ -28,13 +28,11 @@ class _GeneRationTextFieldState extends State<GeneRationTextField> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return BlocProvider(
         create: (context) => IndexCubit(),
         child: BlocBuilder<IndexCubit, int>(
           builder: (context, state) {
-            print("state: $state");
             return SliverVisibility(
               visible: true,
               sliver: SliverToBoxAdapter(

@@ -11,22 +11,15 @@ part 'category_select_state.dart';
 
 class CategorySelectBloc extends Bloc<CategorySelectEvent, CategorySelectState> {
   final DiscoverRepository discoverRepository;
-  CategorySelectBloc({required this.discoverRepository}) : super(CategorySelectState()) {
+  CategorySelectBloc({required this.discoverRepository}) : super(const CategorySelectState()) {
     on<CategorySelectEventFetchData>(_fetchData);
   }
   _fetchData(CategorySelectEventFetchData event, Emitter<CategorySelectState> emit) async {
     emit(state.copyWith(statusText: "loading", formStats: FormStatus.loading));
     final UniversalData universalData = await discoverRepository.fetchData();
-    if (universalData != null) {
-      emit(state.copyWith(
-          statusText: "success....",
-          dataCategoryModel: universalData.data,
-          formStats: FormStatus.success));
-    } else {
-      emit(state.copyWith(
-        statusText: "error",
-        formStats: FormStatus.error,
-      ));
+    emit(state.copyWith(
+        statusText: "success....",
+        dataCategoryModel: universalData.data,
+        formStats: FormStatus.success));
     }
-  }
 }

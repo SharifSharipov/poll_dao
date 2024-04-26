@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +37,6 @@ class _TypeOptionsState extends State<TypeOptions> {
       }
     }
 
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Center(
       child: Padding(

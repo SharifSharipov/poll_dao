@@ -1,48 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:poll_dao/src/config/routes/routes.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
-import 'package:poll_dao/src/core/icons/app_icons.dart';
-import 'package:poll_dao/src/features/location_page/presentation/widgets/location_widget.dart';
-import 'package:poll_dao/src/features/profile_page/presentation/manager/fetch_profile_data_bloc/fetch_profile_data_bloc.dart';
+import 'package:poll_dao/src/features/create_poll/presentation/widgets/selects_item_widget.dart';
 
 import '../../../../core/constants/nationality_list.dart';
+import '../../../create_poll/presentation/widgets/single_sellection_widget.dart';
+
 class LocationPage extends StatefulWidget {
-  const LocationPage({super.key});
+  const LocationPage({super.key, this.countries = ''});
+  final String countries;
 
   @override
   State<LocationPage> createState() => _LocationPageState();
 }
 
 class _LocationPageState extends State<LocationPage> {
+  String _countries = '';
+
+  @override
+  void initState() {
+    _countries = widget.countries;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(onPressed: () {
-          Navigator.pushNamed(context, RouteNames.discoverPage);
-        }, icon:SvgPicture.asset(AppImages.arrowBackIos),),
-        title: const Text(
-          "Location",
-          style: TextStyle(color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
+    return SingleSelectionScaffold(
+      title: 'Location',
+      result: _countries,
       body: ListView.separated(
         itemCount: countries.length,
-        separatorBuilder: (context, index) => Divider(
-          color: AppColors.black.withOpacity(0.3),
-          height: 1,
-        ),
-        itemBuilder: (context, index) => LocationWidget(
+        separatorBuilder: (context, index) =>
+            const Divider(color: AppColors.secondary, height: 1, indent: 20, endIndent: 20),
+        itemBuilder: (context, index) => SelectsItemWidget(
+          isChosen: _countries.contains(countries[index]),
           text: countries[index],
           onTap: () {
-            context.read<FetchProfileDataBloc>().add(UpdateLocation(location: countries[index]));
-            Navigator.pop(context);
+            if (_countries == countries[index]) {
+              setState(() => _countries = '');
+            } else {
+              setState(() => _countries = countries[index]);
+            }
           },
         ),
       ),

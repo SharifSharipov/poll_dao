@@ -11,17 +11,13 @@ class AnswerButtonFon extends StatelessWidget {
     return ZoomTapAnimation(
       onTap: onTap,
       child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: AppColors.c_93A2B4.withOpacity(0.3)),
+        width: 26,
+        height: 26,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.c_93A2B4.withOpacity(0.3)),
         child: Center(
           child: Text(
             answer,
-            style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.c_5856D6),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.c_5856D6),
           ),
         ),
       ),

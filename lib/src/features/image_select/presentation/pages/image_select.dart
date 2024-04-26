@@ -42,11 +42,20 @@ class _ImageSelectState extends State<ImageSelect> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
+                  childAspectRatio: 1.0,
+                ),
+                itemCount: imageFiles.length,
+                itemBuilder: (BuildContext context, int index) {
                   return Stack(
                     children: [
                       Container(
@@ -79,16 +88,10 @@ class _ImageSelectState extends State<ImageSelect> {
                     ],
                   );
                 },
-                childCount: imageFiles.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-                childAspectRatio: 1.0,
-              ),
-            ),
-          ],
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -99,42 +102,3 @@ class _ImageSelectState extends State<ImageSelect> {
     );
   }
 }
-
-/*  Expanded(
-                child: GridView.builder(
-                  itemCount: imageFiles.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Stack(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(5),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.file(
-                              File(imageFiles[index]!.path),
-                              fit: BoxFit.cover, 
-                              width: double.infinity, 
-                              height: double.infinity, 
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 5,
-                          right: 5,
-                          child: IconButton(
-                            icon: SvgPicture.asset(AppImages.cancel,height: 24,width: 24,),
-                            onPressed: () {
-                              deleteImage(index);
-                            },
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),*/

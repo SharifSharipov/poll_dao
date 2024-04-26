@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
-import 'package:poll_dao/src/features/custom_sliver_example/presentation/widgets/last_widget.dart';
+import 'package:poll_dao/src/features/custom_sliver_example/presentation/widgets/poll_title_widget.dart';
 import 'package:poll_dao/src/features/custom_sliver_example/presentation/widgets/type_select_options.dart';
 
 import '../../../../core/icons/app_icons.dart';
@@ -36,20 +37,16 @@ class _CustomScrollViewExampleState extends State<CustomScrollViewExample> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: lastedWidget(context: context, controllerOne: controllerOne),
-          ),
+          SliverToBoxAdapter(child: PollTitleWidget(controllerOne: controllerOne)),
           if (selecteddata == 1)
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
+                (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(top: 14),
                     child: Stack(
@@ -107,38 +104,38 @@ class _CustomScrollViewExampleState extends State<CustomScrollViewExample> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                  30.ph,
-                  AddOptions(
-                    onTap: () {
-                      showCupertinoDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return TypeOptions(
-                            onTapOne: () {
-                              setState(() {
-                                selecteddata = 1;
-                                Navigator.pop(context);
-                              });
-                            },
-                            onTapTwo: () {
-                              setState(() {
-                                selecteddata = 2;
-                                Navigator.pop(context);
-                              });
-                            },
-                            onTapThree: () {
-                              setState(() {
-                                selecteddata = 3;
-                                Navigator.pop(context);
-                              });
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  30.ph,
-                  const AdvancedAudienceControl(),
+                30.ph,
+                AddOptions(
+                  onTap: () {
+                    showCupertinoDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return TypeOptions(
+                          onTapOne: () {
+                            setState(() {
+                              selecteddata = 1;
+                              Navigator.pop(context);
+                            });
+                          },
+                          onTapTwo: () {
+                            setState(() {
+                              selecteddata = 2;
+                              Navigator.pop(context);
+                            });
+                          },
+                          onTapThree: () {
+                            setState(() {
+                              selecteddata = 3;
+                              Navigator.pop(context);
+                            });
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+                30.ph,
+                const AdvancedAudienceControl(),
               ],
             ),
           )

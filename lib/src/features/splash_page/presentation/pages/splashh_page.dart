@@ -1,11 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/pages/create_poll_page.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/pages/experense.dart';
-import 'package:poll_dao/src/features/discover_page/presentation/pages/dicover_page.dart';
-import 'package:poll_dao/src/features/experensive_page/pages/experensive_page.dart';
-import 'package:poll_dao/src/features/profile_page/presentation/pages/profile_page.dart';
+import '../../../../config/routes/routes.dart';
 import '../../../../core/colors/app_colors.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -16,19 +15,10 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   bool showDetails = false;
   _init() async {
-    await Future.delayed(
-      const Duration(milliseconds: 1200),
-    );
-    if (context.mounted) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return const DisCoverPage();
-          },
-        ),
-      );
-    }
+    await Future.delayed(const Duration(seconds: 1));
+    // final String token = StorageRepository.getString("token");
+    // Navigator.of(context).pushReplacementNamed(RouteNames.signInPage);
+      Navigator.of(context).pushReplacementNamed(RouteNames.discoverPage);
   }
 
   @override
@@ -44,12 +34,16 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height=MediaQuery.of(context).size.height;
-    double width=MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColors.white,
-      body:Center(
-         child:  Image.asset(AppImages.logo,width: width/3.53,height:height/4.77,),
+      body: Center(
+        child: Image.asset(
+          AppImages.logo,
+          width: width / 3.53,
+          height: height / 4.77,
+        ),
       ),
     );
   }

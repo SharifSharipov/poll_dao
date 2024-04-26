@@ -3,20 +3,29 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/text_widg
 
 import '../../../../core/colors/app_colors.dart';
 
-Widget customNewPollNavigate(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      const Text(
-        "dataaaa",
-        style: TextStyle(color: Colors.transparent),
-      ),
-      customTextWidget(text: "New poll", color: AppColors.black),
-      TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Done', style: TextStyle(color: AppColors.c_0D72FF, fontSize: 17)))
-    ],
-  );
+class CustomNewPollNavigate extends StatelessWidget {
+  const CustomNewPollNavigate({super.key, this.onDone, this.onCancel, this.isLoading = false});
+  final VoidCallback? onDone;
+  final VoidCallback? onCancel;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextButton(
+          onPressed: onCancel,
+          child: const Text('Cancel', style: TextStyle(color: AppColors.c_0D72FF, fontSize: 17)),
+        ),
+        customTextWidget(text: "New poll", color: AppColors.black),
+        TextButton(
+          onPressed: onDone,
+          child: isLoading
+              ? const CircularProgressIndicator.adaptive()
+              : const Text('Done', style: TextStyle(color: AppColors.c_0D72FF, fontSize: 17)),
+        )
+      ],
+    );
+  }
 }

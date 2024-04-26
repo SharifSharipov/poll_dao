@@ -26,13 +26,11 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return BlocProvider(
         create: (context) => IndexCubit(),
         child: BlocBuilder<IndexCubit, int>(
           builder: (context, state) {
-            print("state: $state");
             return ListView(
               children: [
                 Visibility(

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class StorageRepository{
   static StorageRepository? _storageRepository;
   static SharedPreferences? _preferences;
+
   StorageRepository._();
+  
   static Future<StorageRepository> getInstance() async {
     if (_storageRepository == null) {
       var st = StorageRepository._();

@@ -3,13 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
 import 'package:poll_dao/src/core/icons/app_icons.dart';
+
 class PersonData extends StatefulWidget {
-  const PersonData(
-      {super.key,
-      required this.onTap,
-      required this.textOne,
-      required this.textTwo,
-      required this.icon});
+  const PersonData({
+    super.key,
+    required this.onTap,
+    required this.textOne,
+    required this.textTwo,
+    required this.icon,
+  });
   final VoidCallback onTap;
   final String textOne;
   final String textTwo;
@@ -32,30 +34,30 @@ class _PersonDataState extends State<PersonData> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.white,
+            Expanded(
+              child: Row(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.white,
+                    ),
+                    child: Center(
+                        child: SvgPicture.asset(
+                      widget.icon,
+                      width: 24,
+                      height: 24,
+                    )),
                   ),
-                  child: Center(
-                      child: SvgPicture.asset(
-                    widget.icon,
-                    width: 24,
-                    height: 24,
-                  )),
-                ),
-                20.pw,
-                Column(
-                  children: [
-                    RichText(
+                  20.pw,
+                  Expanded(
+                    child: RichText(
+                      overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         text: widget.textOne,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.c_5856D6),
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.c_5856D6),
                         children: <TextSpan>[
                           TextSpan(
                             text: " \n${widget.textTwo}",
@@ -68,17 +70,18 @@ class _PersonDataState extends State<PersonData> {
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             IconButton(
-                onPressed: widget.onTap,
-                icon: SvgPicture.asset(
-                  AppImages.lowIosButton,
-                  height: 24,
-                  width: 24,
-                ))
+              onPressed: widget.onTap,
+              icon: SvgPicture.asset(
+                AppImages.lowIosButton,
+                height: 24,
+                width: 24,
+              ),
+            ),
           ],
         ),
       ),

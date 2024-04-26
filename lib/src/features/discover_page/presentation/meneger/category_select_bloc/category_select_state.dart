@@ -5,7 +5,7 @@ class CategorySelectState extends Equatable{
   final String? statusText ;
   final DataCategoryModel? dataCategoryModel;
   final FormStatus? formStats;
-  CategorySelectState({this.statusText, this.dataCategoryModel, this.formStats=FormStatus.pure});
+  const CategorySelectState({this.statusText, this.dataCategoryModel, this.formStats=FormStatus.pure});
 
   CategorySelectState copyWith({String? statusText, DataCategoryModel? dataCategoryModel, FormStatus? formStats}) {
     return CategorySelectState(

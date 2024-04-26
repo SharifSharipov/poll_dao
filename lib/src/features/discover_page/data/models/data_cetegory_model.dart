@@ -19,22 +19,17 @@ class DataCategoryModel {
     DateTime? cratedAt,
     String? name,
   }) {
-    return DataCategoryModel(
-        id: id ?? this.id, cratedAt: cratedAt ?? this.cratedAt, name: name ?? this.name);
+    return DataCategoryModel(id: id ?? this.id, cratedAt: cratedAt ?? this.cratedAt, name: name ?? this.name);
   }
 
   factory DataCategoryModel.fromJson(Map<String, dynamic> json) {
     return DataCategoryModel(
         id: json[DataCategoryModelFields.id] as int? ?? 0,
-        cratedAt:
-            DateTime.parse(json[DataCategoryModelFields.cratedAt]) as DateTime? ?? DateTime.now(),
+        cratedAt: DateTime.parse(json[DataCategoryModelFields.cratedAt]) as DateTime? ?? DateTime.now(),
         name: json[DataCategoryModelFields.name] as String ?? "");
   }
-  Map<String, dynamic> toJson() => {
-        DataCategoryModelFields.id: id,
-        DataCategoryModelFields.cratedAt: cratedAt,
-        DataCategoryModelFields.name: name
-      };
+  Map<String, dynamic> toJson() =>
+      {DataCategoryModelFields.id: id, DataCategoryModelFields.cratedAt: cratedAt, DataCategoryModelFields.name: name};
   @override
   String toString() {
     return """

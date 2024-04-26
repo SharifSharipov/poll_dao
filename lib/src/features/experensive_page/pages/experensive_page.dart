@@ -1,13 +1,13 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poll_dao/src/core/extentions/extentions.dart';
+import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
+import 'package:poll_dao/src/features/custom_sliver_example/presentation/widgets/type_select_options.dart';
+import 'package:poll_dao/src/features/experensive_page/widegts/widget_one.dart';
 
 class ExpensivePage extends StatefulWidget {
-  const ExpensivePage({Key? key}) : super(key: key);
+  const ExpensivePage({super.key});
 
   @override
   State<ExpensivePage> createState() => _ExpensivePageState();
@@ -15,174 +15,126 @@ class ExpensivePage extends StatefulWidget {
 
 class _ExpensivePageState extends State<ExpensivePage> {
   final List<Widget> widgetList = [];
-  final TextEditingController controllerOne = TextEditingController();
-  final TextEditingController controllerTwo = TextEditingController();
-  final List<TextEditingController> textControllers = [TextEditingController()];
-  final List<XFile?> imageFiles = [null];
-  final picker = ImagePicker();
+  TextEditingController controllerOne = TextEditingController();
+  TextEditingController controllerTwo = TextEditingController();
+  List<TextEditingController> textControllers = [TextEditingController()];
+  List<XFile?> imageFiles = [];
+  final pickImage = ImagePicker();
   bool showAddOptions = true;
-  int selectedData = 1; // 1 for text, 2 for image, 3 for image + text
+  int selecteddata = 1;
 
-  void selectImageFromGallery() async {
-    final pickedImages = await picker.pickMultiImage();
-    if (pickedImages.isNotEmpty) {
-      setState(() {
-        imageFiles.addAll(pickedImages);
-      });
+  Future<void> pickImageFromGallery(int index) async {
+    final image = await pickImage.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    if (image == null) return;
+    setState(() {
+      imageFiles[index] = XFile(image.path);
+    });
+  }
+
+  void selectImage() async {
+    final List<XFile> selectedImages = await pickImage.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
+      setState(() => imageFiles.addAll(selectedImages));
     }
   }
 
-  void deleteImage(int index) {
-    setState(() {
-      imageFiles.removeAt(index);
-    });
+  void deleteImage(int index) => setState(() => imageFiles.removeAt(index));
+
+  @override
+  void initState() {
+    super.initState();
+    textControllers = [TextEditingController()];
+    imageFiles = [null];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Expensive Page"),
+        title: const Text("Experensive Page"),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(20),
         children: [
-          if (selectedData == 1)
-            TextField(
-              controller: controllerOne,
-              decoration: const InputDecoration(labelText: 'Text Field'),
-            ),
-          if (selectedData == 2)
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: selectImageFromGallery,
-                  child: const Text('Select Image'),
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: imageFiles.length,
-                  itemBuilder: (context, index) {
-                    if (imageFiles[index] != null) {
-                      return Stack(
-                        children: [
-                          Image.file(
-                            File(imageFiles[index]!.path),
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                deleteImage(index);
-                              },
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ],
-            ),
-          if (selectedData == 3)
-            Column(
-              children: [
-                TextField(
-                  controller: controllerTwo,
-                  decoration: const InputDecoration(labelText: 'Text Field'),
-                ),
-                ElevatedButton(
-                  onPressed: selectImageFromGallery,
-                  child: const Text('Select Image'),
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: imageFiles.length,
-                  itemBuilder: (context, index) {
-                    if (imageFiles[index] != null) {
-                      return Stack(
-                        children: [
-                          Image.file(
-                            File(imageFiles[index]!.path),
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                deleteImage(index);
-                              },
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ],
-            ),
-          MaterialButton(onPressed: (){
-            showCupertinoModalPopup(
-              context: context,
-              builder: (BuildContext context) => CupertinoActionSheet(
-                actions: [
-                  CupertinoActionSheetAction(
-                    onPressed: () {
+          // lastedWidget(context: context, controllerOne: controllerOne),
+          // if (selecteddata == 1) const WidgetOne(),
+          // if (selecteddata == 2) const WidgetTwo(),
+          // if (selecteddata == 3)
+          //   GridView.count(
+          //     crossAxisCount: 3,
+          //     mainAxisSpacing: 10.0,
+          //     crossAxisSpacing: 10.0,
+          //     childAspectRatio: 1.0,
+          //     children: List.generate(imageFiles!.length, (index) {
+          //       return Stack(
+          //         children: [
+          //           Container(
+          //             margin: const EdgeInsets.all(5),
+          //             child: ClipRRect(
+          //               borderRadius: BorderRadius.circular(10),
+          //               child: Image.file(
+          //                 File(imageFiles[index]?.path ?? ""),
+          //                 fit: BoxFit.cover,
+          //                 width: double.infinity,
+          //                 height: double.infinity,
+          //               ),
+          //             ),
+          //           ),
+          //           Positioned(
+          //             top: 5,
+          //             right: 5,
+          //             child: IconButton(
+          //               icon: SvgPicture.asset(
+          //                 AppImages.cancel,
+          //                 height: 24,
+          //                 width: 24,
+          //               ),
+          //               onPressed: () {
+          //                 deleteImage(index);
+          //               },
+          //               color: Colors.red,
+          //             ),
+          //           ),
+          //         ],
+          //       );
+          //     }),
+          //   ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) => widgetList[index],
+            itemCount: widgetList.length,
+          ),
+          30.ph,
+          AddOptions(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return TypeOptions(
+                    onTapOne: () {
                       setState(() {
-                        selectedData = 1;
+                        widgetList.add(const WidgetOne());
+                        Navigator.pop(context);
                       });
-                      Navigator.pop(context); // Close the action sheet after selection
                     },
-                    child: Text('Text'),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
+                    onTapTwo: () {
                       setState(() {
-                        selectedData = 2;
+                        selecteddata = 2;
+                        Navigator.pop(context);
                       });
-                      Navigator.pop(context); // Close the action sheet after selection
                     },
-                    child: Text('Image'),
-                  ),
-                  CupertinoActionSheetAction(
-                    onPressed: () {
+                    onTapThree: () {
                       setState(() {
-                        selectedData = 3;
+                        selectImage();
+                        selecteddata = 3;
+                        Navigator.pop(context);
                       });
-                      Navigator.pop(context); // Close the action sheet after selection
                     },
-                    child: Text('Image + Text'),
-                  ),
-                ],
-                cancelButton: CupertinoActionSheetAction(
-                  onPressed: () {
-                    Navigator.pop(context); // Close the action sheet without selection
-                  },
-                  child: Text('Cancel'),
-                ),
-              ),
-            );
-
-          }, child: const Text('Create Poll'),),
+                  );
+                },
+              );
+            },
+          ),
           30.ph,
           const AdvancedAudienceControl(),
         ],

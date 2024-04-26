@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/features/widgets/cupertino_action_sheet_action_widget.dart';
 
-void PollshowDialog(
+void pollshowDialog(
     {required BuildContext context,
     required VoidCallback onTapOne,
     required VoidCallback onTapTwo,
@@ -49,3 +49,43 @@ void PollshowDialog(
     },
   );
 }
+
+void pollShowDialog2({
+  required context,
+  required VoidCallback onTapOne,
+  required VoidCallback onTapTwo,
+  required VoidCallback onTapThree}) {
+    double width = MediaQuery.of(context).size.width;
+
+    showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: EdgeInsets.only(left: width / 8, right: width / 8),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CupertinoActionSheet(
+                actions: <Widget>[
+                  CupertinoActionSheetActionWidget(
+                    onPressed: onTapOne,
+                    text: 'Change choice',
+                  ),
+                  CupertinoActionSheetActionWidget(
+                    onPressed: onTapTwo,
+                    text: 'Delete',
+                  ),
+                  CupertinoActionSheetActionWidget(
+                    onPressed: onTapThree,
+                    text: 'Cancel',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+  }

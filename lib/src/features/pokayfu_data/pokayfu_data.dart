@@ -1,16 +1,10 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poll_dao/src/core/colors/app_colors.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/add_options.dart';
 import 'package:poll_dao/src/features/create_poll/presentation/widgets/advanced_audince_control.dart';
-import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_button.dart';
-
-import '../create_poll/presentation/pages/experense.dart';
 
 enum AnswerType { text, image, image_text }
 
@@ -118,7 +112,7 @@ class TextPollWidget extends StatelessWidget {
 }
 
 class ImagePollWidget extends StatefulWidget {
-  const ImagePollWidget({Key? key}) : super(key: key);
+  const ImagePollWidget({super.key});
 
   @override
   _ImagePollWidgetState createState() => _ImagePollWidgetState();
@@ -130,7 +124,7 @@ class _ImagePollWidgetState extends State<ImagePollWidget> {
 
   Future<void> selectImage() async {
     List<XFile>? imageFilesFromGallery = await _picker.pickMultiImage();
-    if (imageFilesFromGallery != null && imageFilesFromGallery.isNotEmpty) {
+    if (imageFilesFromGallery.isNotEmpty) {
       setState(() {
         imageFiles.addAll(imageFilesFromGallery.map((e) => File(e.path)));
       });

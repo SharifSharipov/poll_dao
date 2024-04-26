@@ -40,7 +40,8 @@ class ApiService {
     );
   }
 
-  Future<UniversalData> sendSignUpRequest({required String email,required  String password,required  String name}) async {
+  Future<UniversalData> sendSignUpRequest(
+      {required String email, required String password, required String name}) async {
     Response response;
     try {
       response = await _dio.post("http://94.131.10.253:3000/auth/sign-up", data: {
@@ -48,8 +49,12 @@ class ApiService {
         'password': password,
         'name': name,
       });
+
+      if (response.data["token"] != null) {
+        StorageRepository.putString("token", response.data["token"]);
+      }
       LoggerService.i("Response=>$response");
-      LoggerService.e("Response=>${response.data}");
+
       return UniversalData(data: UserModel.fromJson(response.data));
     } on DioException catch (e) {
       return UniversalData(error: e.response!.data.toString());

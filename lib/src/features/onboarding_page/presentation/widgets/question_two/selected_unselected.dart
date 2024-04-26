@@ -17,7 +17,6 @@ class SelectedUnselected extends StatefulWidget {
 class _SelectedUnselectedState extends State<SelectedUnselected> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return ZoomTapAnimation(
       onTap: widget.onTap,
       child: Container(
@@ -27,12 +26,17 @@ class _SelectedUnselectedState extends State<SelectedUnselected> {
           borderRadius: BorderRadius.circular(
             25,
           ),
-          color: widget.isSelected ? AppColors.white : AppColors.c_5856D6,
+          color: widget.isSelected ? AppColors.white : Colors.transparent,
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: SvgPicture.asset(
-              widget.isSelected ? AppImages.unSelectedLike : AppImages.selectedLike),
+            AppImages.unSelectedLike,
+            colorFilter: ColorFilter.mode(
+              widget.isSelected ? AppColors.c_5856D6 : Colors.transparent,
+              BlendMode.srcIn,
+            ),
+          ),
         ),
       ),
     );

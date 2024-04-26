@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 import 'package:poll_dao/src/features/profile_page/data/models/change_password.dart';
 import 'package:poll_dao/src/features/profile_page/domain/repositories/repository.dart';
 import 'package:poll_dao/src/features/widget_servers/status/status.dart';
@@ -12,7 +11,7 @@ part 'change_password_state.dart';
 
 class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> {
  final ProfileRepository profileRepository;
-  ChangePasswordBloc({required this.profileRepository}) : super(ChangePasswordState()) {
+  ChangePasswordBloc({required this.profileRepository}) : super(const ChangePasswordState()) {
     on<ChangePasswordPressed>(_changePassword);
   }
   final TextEditingController oldPasswordController= TextEditingController();

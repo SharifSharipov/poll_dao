@@ -9,9 +9,9 @@ class FetchProfileDataError extends FetchProfileDataEvent {
   final String errorText;
   FetchProfileDataError({required this.errorText});
 }
-class UpdateProfilePressed extends FetchProfileDataEvent {
 
-}
+class UpdateProfilePressed extends FetchProfileDataEvent {}
+
 class UpdateProfileErrorPressed extends FetchProfileDataEvent {
   final String errorText;
   UpdateProfileErrorPressed({required this.errorText});
@@ -30,19 +30,34 @@ class UpdateLocation extends FetchProfileDataEvent {
   final String location;
   UpdateLocation({required this.location});
 }
+
 class UpdateAge extends FetchProfileDataEvent {
   final int age;
   UpdateAge({required this.age});
 }
+
 class UpdateName extends FetchProfileDataEvent {
   final String name;
   UpdateName({required this.name});
 }
+
 class UpdateEducation extends FetchProfileDataEvent {
   final String education;
   UpdateEducation({required this.education});
 }
+
 class UpdateNationality extends FetchProfileDataEvent {
   final String nationality;
   UpdateNationality({required this.nationality});
 }
+
+class UpdateGender extends FetchProfileDataEvent {
+  final String gender;
+  UpdateGender({required this.gender});
+}
+
+//delete account
+class DeleteAccountEvent extends FetchProfileDataEvent {}
+
+//signout
+class SignOutEvent extends FetchProfileDataEvent {}

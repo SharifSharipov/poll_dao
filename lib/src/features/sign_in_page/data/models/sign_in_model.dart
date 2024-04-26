@@ -10,25 +10,26 @@ class SignInModelFields {
 
 class SignInModel {
   final String email;
-  final String password;
-  SignInModel({required this.email, required this.password});
+  final String name;
+  
+  SignInModel({required this.email, required this.name});
 
-  SignInModel copyWith({String? email, String? password}) {
-    return SignInModel(email: email ?? this.email, password: password ?? this.password);
+  SignInModel copyWith({String? email, String? name}) {
+    return SignInModel(email: email ?? this.email, name: name ?? this.name);
   }
 
   factory SignInModel.fromJson(Map<String, dynamic> json) {
     return SignInModel(
-        email: json[SignInModelFields.email] as String? ?? "",
-        password: json[SignInModelFields.password] as String? ?? "");
+        email: json["user"][SignInModelFields.email],
+        name: json["user"]["name"]);
   }
   Map<String, dynamic> toJson() =>
-      {SignInModelFields.email: email, SignInModelFields.password: password};
+      {SignInModelFields.email: email, "name": name};
   @override
   String toString() {
     return """
     ${SignInModelFields.email}:$email,
-    ${SignInModelFields.password}:$password
+    "name":$name
     """;
   }
 }

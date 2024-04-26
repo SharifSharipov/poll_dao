@@ -17,7 +17,7 @@ class Service {
     ),
   );
 
-  ApiService() {
+  Service() {
     _init();
   }
 
@@ -25,16 +25,17 @@ class Service {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onError: (error, handler) async {
-          debugPrint("ERRORGA TUSHDI:${error.message} and ${error.response}");
+          debugPrint("AN ERROR HAS OCCURRED:${error.message} and ${error.response}");
           return handler.next(error);
         },
         onRequest: (requestOptions, handler) async {
-          debugPrint("SO'ROV YUBORILDI :${requestOptions.path}");
-          requestOptions.headers.addAll({"token": StorageRepository.getString("token")});
+          debugPrint("REQUEST HAS BEEN SENT :${requestOptions.path}");
+          final token = StorageRepository.getString("token");
+          requestOptions.headers.addAll({"access-token": token});
           return handler.next(requestOptions);
         },
         onResponse: (response, handler) async {
-          debugPrint("JAVOB KELDI :${response.requestOptions.path}");
+          debugPrint("ANSWER HAS COME :${response.requestOptions.path}");
           return handler.next(response);
         },
       ),
@@ -46,59 +47,63 @@ class Service {
     try {
       response = await _dio.get("http://94.131.10.253:3000/settings/profile/me");
       LoggerService.i("Response=>$response");
-      LoggerService.e("Response=>${response.data}");
       return UniversalData(data: ProfileModel.fromJson(response.data));
     } on DioException catch (e) {
+      LoggerService.e("Response=>${e.message}");
       return UniversalData(error: e.response!.data.toString());
     } catch (e) {
       return UniversalData(error: e.toString());
     }
   }
 
-  Future<UniversalData> putProfileData(
-      {required String location,
-      required int age,
-      required String name,
-      required String education}) async {
+  Future<UniversalData> putProfileData({
+    required String location,
+    required int age,
+    required String name,
+    required String education,
+    required String gender,
+    required String nationality,
+  }) async {
     Response response;
     try {
-      response = await _dio.put("http://94.131.10.253:3000/settings/profile/update", data: {
-        "location": location,
-        "age": age,
-        "name": name,
-        "education": education,
-      },
-      options: Options(
-        headers: {"access-token": r'$2b$10$Lh5sRYW4z1ME.mHHvTe3ruaFY2Hlpr0x1hbMzK4PqxonpbhIlU62a'},
-      )
-      );
+      response = await _dio.put("http://94.131.10.253:3000/settings/profile/update",
+          data: {
+            "location": location,
+            "age": age,
+            "name": name,
+            "education": education,
+            "gender": gender,
+            "nationality": nationality,
+          },
+          options: Options(
+            headers: {"access-token": StorageRepository.getString("token")},
+          ));
+      print(StorageRepository.getString("token"));
+
       LoggerService.i("Response=>$response");
-      LoggerService.e("Response=>${response.data}");
+      //LoggerService.e("Response=>${response.data}");
       LoggerService.d("Response=>${response.data.hashCode}");
       return UniversalData(data: ProfileModel.fromJson(response.data));
     } on DioException catch (e) {
       print("DIO ERROR=>${e.response!.data}");
       return UniversalData(error: e.response!.data.toString());
     } catch (e) {
-      print("DIO ERROR=>${e}");
+      print("DIO ERROR=>$e");
       return UniversalData(error: e.toString());
     }
   }
 
-  Future<UniversalData> sendProfileData(
-      {required String oldPassword, required String newPassword}) async {
+  Future<UniversalData> sendProfileData({required String oldPassword, required String newPassword}) async {
     Response response;
     try {
-      response = await _dio.put(
-        "http://94.131.10.253:3000/settings/profile/change-password",
-        data: {
-          "old_password": oldPassword,
-          "new_password": newPassword,
-        },
-        options: Options(
-          headers: {"access-token": r'$2b$10$Lh5sRYW4z1ME.mHHvTe3ruaFY2Hlpr0x1hbMzK4PqxonpbhIlU62a'},
-        )
-      );
+      response = await _dio.put("http://94.131.10.253:3000/settings/profile/change-password",
+          data: {
+            "old_password": oldPassword,
+            "new_password": newPassword,
+          },
+          options: Options(
+            headers: {"access-token": StorageRepository.getString("token")},
+          ));
       LoggerService.i("Response=>$response");
       LoggerService.e("Response=>${response.data}");
       LoggerService.d("Response=>${response.data.hashCode}");
@@ -108,9 +113,21 @@ class Service {
       print("DIO ERROR=>${e.response!.data}");
       return UniversalData(error: e.response!.data.toString());
     } catch (e) {
-      print("ASOLUT POXUY ERROR=>${e}");
+      print("ASOLUT POXUY ERROR=>$e");
       return UniversalData(error: e.toString());
     }
+  }
+
+  //delete account
+  Future<void> deleteAccount() async {
+    Response response;
+    response = await _dio.delete(
+      "http://94.131.10.253:3000/settings/delete",
+      options: Options(
+        headers: {"access-token": StorageRepository.getString("token")},
+      ),
+    );
+    LoggerService.i("Response=>$response");
   }
 }
 

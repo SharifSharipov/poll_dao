@@ -29,7 +29,6 @@ class ImageDataTextField extends StatefulWidget {
 class _ImageDataTextFieldState extends State<ImageDataTextField> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(

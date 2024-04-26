@@ -9,6 +9,7 @@ class ProfileModelFields {
   static const String nationality = "nationality";
   static const String biometryPassed = "biometryPassed";
   static const String userId = "userId";
+  static const String email = "email";
 }
 
 class ProfileModel {
@@ -22,6 +23,7 @@ class ProfileModel {
   final String nationality;
   final dynamic biometryPassed;
   final int userId;
+  final String email;
 
   ProfileModel({
     required this.id,
@@ -34,6 +36,7 @@ class ProfileModel {
     required this.nationality,
     required this.biometryPassed,
     required this.userId,
+    required this.email,
   });
 
   ProfileModel copyWith({
@@ -47,18 +50,21 @@ class ProfileModel {
     String? nationality,
     dynamic biometryPassed,
     int? userId,
+    String? email,
   }) {
     return ProfileModel(
-        id: id ?? this.id,
-        maternalLang: maternalLang ?? this.maternalLang,
-        age: age ?? this.age,
-        name: name ?? this.name,
-        gender: gender ?? this.gender,
-        location: location ?? this.location,
-        education: education ?? this.education,
-        nationality: nationality ?? this.nationality,
-        biometryPassed: biometryPassed ?? this.biometryPassed,
-        userId: userId ?? this.userId);
+      id: id ?? this.id,
+      maternalLang: maternalLang ?? this.maternalLang,
+      age: age ?? this.age,
+      name: name ?? this.name,
+      gender: gender ?? this.gender,
+      location: location ?? this.location,
+      education: education ?? this.education,
+      nationality: nationality ?? this.nationality,
+      biometryPassed: biometryPassed ?? this.biometryPassed,
+      userId: userId ?? this.userId,
+      email: email ?? this.email,
+    );
   }
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
@@ -72,6 +78,7 @@ class ProfileModel {
         nationality: json[ProfileModelFields.nationality] as String? ?? "",
         biometryPassed: json[ProfileModelFields.biometryPassed],
         userId: json[ProfileModelFields.userId] as int? ?? 0,
+        email: json[ProfileModelFields.email] as String? ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,6 +92,7 @@ class ProfileModel {
         ProfileModelFields.nationality: nationality,
         ProfileModelFields.biometryPassed: biometryPassed,
         ProfileModelFields.userId: userId,
+        ProfileModelFields.email: email,
       };
 
   ProfileModel.empty()
@@ -99,5 +107,6 @@ class ProfileModel {
           nationality: "",
           biometryPassed: "",
           userId: 0,
+          email: "",
         );
 }

@@ -14,6 +14,7 @@ class ActivePollsNavigate extends StatefulWidget {
   final double textSizeTwo;
   final FontWeight fontWeightTextOne;
   final FontWeight fontWeightTextTwo;
+  
   const ActivePollsNavigate({
     super.key,
     required this.radius,

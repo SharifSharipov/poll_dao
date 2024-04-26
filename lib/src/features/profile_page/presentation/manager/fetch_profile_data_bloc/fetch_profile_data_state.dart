@@ -7,18 +7,15 @@ class FetchProfileDataState extends Equatable {
   final ProfileModel profileModel;
   final ChangePasswordModel? changePasswordModel;
 
-  FetchProfileDataState({
+  const FetchProfileDataState({
     this.status = FormStatus.pure,
     this.statusText,
-    required this.profileModel ,
+    required this.profileModel,
     this.changePasswordModel,
   });
 
   FetchProfileDataState copyWith(
-      {FormStatus? status,
-      String? statusText,
-      ProfileModel? profileModel,
-      ChangePasswordModel? changePasswordModel}) {
+      {FormStatus? status, String? statusText, ProfileModel? profileModel, ChangePasswordModel? changePasswordModel}) {
     return FetchProfileDataState(
       status: status ?? this.status,
       statusText: statusText ?? this.statusText,

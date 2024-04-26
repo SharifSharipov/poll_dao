@@ -8,22 +8,28 @@ import 'package:poll_dao/src/features/create_poll/presentation/widgets/answer_bu
 import '../../../create_poll/presentation/pages/experense.dart';
 
 class InsertTextFields extends StatefulWidget {
-  const InsertTextFields({super.key, required this.controllerList, required this.index, required this.onTapOne, required this.onTapTwo});
+  const InsertTextFields({super.key, required this.controllerList, required this.index, required this.onTapTwo});
   final List<TextEditingController> controllerList;
   final int index;
-  final VoidCallback onTapOne;
   final VoidCallback onTapTwo;
   @override
   State<InsertTextFields> createState() => _InsertTextFieldsState();
 }
 
 class _InsertTextFieldsState extends State<InsertTextFields> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(15),

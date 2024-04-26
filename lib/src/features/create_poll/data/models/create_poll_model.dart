@@ -49,10 +49,8 @@ class CreatePollModel {
 
   factory CreatePollModel.fromJson(Map<String, dynamic> json) => CreatePollModel(
         id: json[CreatePollModelFields.id] as int? ?? 0,
-        createdAt:
-            DateTime.parse(json[CreatePollModelFields.createdAt]) as DateTime? ?? DateTime.now(),
-        updatedAt:
-            DateTime.parse(json[CreatePollModelFields.updatedAt]) as DateTime? ?? DateTime.now(),
+        createdAt: DateTime.parse(json[CreatePollModelFields.createdAt]) as DateTime? ?? DateTime.now(),
+        updatedAt: DateTime.parse(json[CreatePollModelFields.updatedAt]) as DateTime? ?? DateTime.now(),
         name: json[CreatePollModelFields.name] as String? ?? "",
         authorId: json[CreatePollModelFields.authorId] as int? ?? 0,
         topicId: json[CreatePollModelFields.topicId] as int? ?? 0,
@@ -62,7 +60,6 @@ class CreatePollModel {
   Map<String, dynamic> toJson() => {
         CreatePollModelFields.id: id,
         CreatePollModelFields.createdAt: createdAt,
-        CreatePollModelFields.updatedAt: updatedAt,
         CreatePollModelFields.name: name,
         CreatePollModelFields.authorId: authorId,
         CreatePollModelFields.topicId: topicId,

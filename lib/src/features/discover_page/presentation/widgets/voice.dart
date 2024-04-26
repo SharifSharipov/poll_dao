@@ -44,28 +44,30 @@ class _VoiceState extends State<Voice> {
                   "Which of the two flower photos should I share on Instagram?",
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.black),
                 ),
-                10.ph,
+                5.ph,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ImageSelect(
-                        isSelected: isSelected1,
-                        onTap: () {
-                          isSelected1 = !isSelected1;
-                          setState(() {});
-                        },
-                        icon: AppImages.sunflower),
+                      isSelected: isSelected1,
+                      onTap: () {
+                        isSelected1 = !isSelected1;
+                        setState(() {});
+                      },
+                      icon: AppImages.sunflower
+                    ),
                     ImageSelect(
-                        isSelected: isSelected2,
-                        onTap: () {
-                          isSelected2 = !isSelected2;
-                          setState(() {});
-                        },
-                        icon: AppImages.flowers)
+                      isSelected: isSelected2,
+                      onTap: () {
+                        isSelected2 = !isSelected2;
+                        setState(() {});
+                      },
+                      icon: AppImages.flowers
+                    )
                   ],
                 ),
-                20.ph,
+                5.ph,
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
