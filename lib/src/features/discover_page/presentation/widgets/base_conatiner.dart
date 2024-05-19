@@ -8,7 +8,7 @@ class BaseContainer extends StatelessWidget {
       {super.key, required this.child, this.padding = const EdgeInsets.only(left: 12)});
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    Theme.of(context);
     // TODO: implement build
     return ZoomTapAnimation(
       onTap: () {},

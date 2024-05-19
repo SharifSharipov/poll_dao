@@ -22,6 +22,8 @@ import '../../../../core/colors/app_colors.dart';
 import '../../../../core/constants/answer_constants.dart';
 import '../../../../core/icons/app_icons.dart';
 import '../../../onboarding_page/presentation/widgets/question_two/selected_unselected.dart';
+import '../../../profile_page/presentation/pages/profile_page.dart';
+import '../../../sign_in_page/presentation/widgets/global_button.dart';
 import '../../../widget_servers/repositories/storage_repository.dart';
 import '../../data/models/poll_model.dart';
 import '../bloc/polls_bloc.dart';
@@ -30,8 +32,13 @@ import 'show_dialog.dart';
 
 class PollWidget extends StatefulWidget {
   final Poll poll;
+  final bool isBlured;
 
-  const PollWidget({super.key, required this.poll});
+  const PollWidget({
+    super.key,
+    required this.poll,
+    this.isBlured = false,
+  });
 
   @override
   State<PollWidget> createState() => _PollWidgetState();
@@ -58,17 +65,19 @@ class _PollWidgetState extends State<PollWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          RouteNames.pollResultPage,
-          arguments: widget.poll.id,
-        );
+        if (!widget.isBlured && _userSelected) {
+          Navigator.pushNamed(
+            context,
+            RouteNames.pollResultPage,
+            arguments: widget.poll.id,
+          );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: widget.isBlured ? 0 : 20, vertical: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             color: Colors.white,
@@ -76,127 +85,201 @@ class _PollWidgetState extends State<PollWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  AvatarWithName(
-                    name: widget.poll.author.name,
-                    radius: 24,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(widget.poll.author.name, style: AppTextStyle.bodyXlargeMedium, maxLines: 2),
-                        TimeAgoText(createdAt: widget.poll.createdAt),
-                      ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: widget.isBlured ? 20 : 0.0),
+                child: Row(
+                  children: [
+                    AvatarWithName(
+                      name: widget.poll.author.name,
+                      radius: 24,
                     ),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        if (StorageRepository.getString("token") != "") {
-                          pollShowDialog2(
-                              context: context,
-                              onTapOne: () {
-                                setState(() => isChanges = true);
-                                Navigator.pop(context);
-                              },
-                              onTapTwo: () {
-                                final userId = context.read<FetchProfileDataBloc>().state.profileModel.id;
-                                if (userId == widget.poll.author.id) {
-                                  context.read<PollsBloc>().add(DeletePoll(widget.poll.id));
-                                } else {
-                                  log("handle another person's post");
-                                }
-                                Navigator.pop(context);
-                              },
-                              onTapThree: () => Navigator.pop(context));
-                        } else {
-                          pollshowDialog(
-                              context: context,
-                              onTapOne: () {
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: AppColors.white,
-                                    elevation: 0,
-                                    context: context,
-                                    builder: (context) => const SignUpPage());
-                              },
-                              onTapTwo: () {
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: AppColors.white,
-                                    elevation: 0,
-                                    context: context,
-                                    builder: (context) => const SignInPage());
-                              },
-                              onTapThree: () => Navigator.pop(context));
-                        }
-                      },
-                      icon: SvgPicture.asset(AppImages.artboard)),
-                ],
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AutoSizeText(widget.poll.author.name, style: AppTextStyle.bodyXlargeMedium, maxLines: 2),
+                          TimeAgoText(createdAt: widget.poll.createdAt),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          if (widget.isBlured) return;
+                          if (StorageRepository.getString("token") != "") {
+                            pollShowDialog2(
+                                context: context,
+                                onTapOne: () {
+                                  setState(() => isChanges = true);
+                                  Navigator.pop(context);
+                                },
+                                onTapTwo: () {
+                                  final userId = context.read<FetchProfileDataBloc>().state.profileModel.id;
+                                  if (userId == widget.poll.author.id) {
+                                    context.read<PollsBloc>().add(DeletePoll(widget.poll.id));
+                                  } else {
+                                    log("handle another person's post");
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                onTapThree: () => Navigator.pop(context));
+                          } else {
+                            pollshowDialog(
+                                context: context,
+                                onTapOne: () {
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: AppColors.white,
+                                      elevation: 0,
+                                      context: context,
+                                      builder: (context) => const SignUpPage());
+                                },
+                                onTapTwo: () {
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: AppColors.white,
+                                      elevation: 0,
+                                      context: context,
+                                      builder: (context) => const SignInPage());
+                                },
+                                onTapThree: () => Navigator.pop(context));
+                          }
+                        },
+                        icon: SvgPicture.asset(AppImages.artboard)),
+                  ],
+                ),
               ),
               20.ph,
-              Text(widget.poll.name, style: AppTextStyle.bodyXlargeMedium),
-              16.ph,
-              SizedBox(
-                  width: double.infinity,
-                  child: widget.poll.options[0].image == null
-                      ? // просто текст
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ...widget.poll.options.asMap().entries.map((entry) {
-                              int index = entry.key;
-                              Option option = entry.value;
-
-                              return _buildOptionButton(
-                                option: option,
-                                index: index,
-                                pollId: widget.poll.id,
-                                isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
-                              );
-                            }),
-                          ],
-                        )
-                      : widget.poll.options[0].image != null && widget.poll.options[0].text != null
-                          ? // картинки + текст
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ...widget.poll.options.asMap().entries.map((entry) {
-                                  int index = entry.key;
-                                  Option option = entry.value;
-
-                                  return _buildOptionButtonTextAndImage(
-                                    option: option,
-                                    index: index,
-                                    pollId: widget.poll.id,
-                                    isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
-                                  );
-                                }),
-                              ],
-                            )
-                          : // просто картинки
-                          ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(12)),
-                              child: _buildImageGrid(
-                                options: widget.poll.options,
-                                pollId: widget.poll.id,
-                                isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
+              if (widget.isBlured)
+                Stack(
+                  children: [
+                    Image.asset('assets/images/blured_poll.png'),
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.c_5856D6, width: 1),
+                        ),
+                        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'some surveys are available only to people with a completed profile',
+                                  textAlign: TextAlign.center,
+                                  style: AppTextStyle.bodyXlargeMedium.copyWith(color: AppColors.c_5856D6),
+                                ),
                               ),
-                            )),
-              pollResult != null
-                  ? Column(
-                      children: [
-                        12.ph,
-                        Text(
-                          "Total votes ${pollResult!.totalVotes}",
-                          style: AppTextStyle.bodyMediumRegular.copyWith(color: AppColors.c_93A2B4),
-                        )
-                      ],
-                    )
-                  : Container()
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GlobalButton(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: AppColors.white,
+                                        elevation: 0,
+                                        context: context,
+                                        builder: (context) {
+                                          return const ProfilePage();
+                                        },
+                                      );
+                                    },
+                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                    cornerRadius: 12,
+                                    data: const Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                          child: Text(
+                                            'Complete profile',
+                                            style: TextStyle(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    color: AppColors.c_5856D6,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else ...[
+                Text(widget.poll.name, style: AppTextStyle.bodyXlargeMedium),
+                16.ph,
+                SizedBox(
+                    width: double.infinity,
+                    child: widget.poll.options[0].image == null
+                        ? // просто текст
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ...widget.poll.options.asMap().entries.map((entry) {
+                                int index = entry.key;
+                                Option option = entry.value;
+
+                                return _buildOptionButton(
+                                  option: option,
+                                  index: index,
+                                  pollId: widget.poll.id,
+                                  isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
+                                );
+                              }),
+                            ],
+                          )
+                        : widget.poll.options[0].image != null && widget.poll.options[0].text != null
+                            ? // картинки + текст
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ...widget.poll.options.asMap().entries.map((entry) {
+                                    int index = entry.key;
+                                    Option option = entry.value;
+
+                                    return _buildOptionButtonTextAndImage(
+                                      option: option,
+                                      index: index,
+                                      pollId: widget.poll.id,
+                                      isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
+                                    );
+                                  }),
+                                ],
+                              )
+                            : // просто картинки
+                            ClipRRect(
+                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                child: _buildImageGrid(
+                                  options: widget.poll.options,
+                                  pollId: widget.poll.id,
+                                  isBiometryRequired: widget.poll.audience?.biometryPassed ?? false,
+                                ),
+                              )),
+                pollResult != null
+                    ? Column(
+                        children: [
+                          12.ph,
+                          Text(
+                            "Total votes ${pollResult!.totalVotes}",
+                            style: AppTextStyle.bodyMediumRegular.copyWith(color: AppColors.c_93A2B4),
+                          )
+                        ],
+                      )
+                    : Container()
+              ],
             ],
           ),
         ),
@@ -220,11 +303,13 @@ class _PollWidgetState extends State<PollWidget> {
       );
       if (response.statusCode == 200) {
         LoggerService.i('Vote successful');
+        Navigator.pushNamed(context, RouteNames.pollResultPage, arguments: pollId);
         await getPollVoteResults(pollId);
         setState(() {
           _userSelected = true;
           _selectedOptionId = index;
         });
+
       } else {
         LoggerService.w('Failed to vote. Status code: ${response.statusCode}');
         LoggerService.w('Reason: ${response.statusMessage}');
@@ -237,12 +322,13 @@ class _PollWidgetState extends State<PollWidget> {
   Future<void> getPollVoteResults(int pollId) async {
     Dio dio = Dio();
     try {
-      var response = await dio.get('http://94.131.10.253:3000/vote/poll-votes/$pollId',
-          options: Options(
-            headers: {
-              'access-token': StorageRepository.getString("token"),
-            },
-          ));
+      var response =
+          await dio.get('http://94.131.10.253:3000/vote/poll-votes/$pollId',
+              options: Options(
+                headers: {
+                  'access-token': StorageRepository.getString("token"),
+                },
+              ));
       if (response.statusCode == 200) {
         LoggerService.i('Get poll $pollId vote results');
         var responseData = response.data;
@@ -296,22 +382,37 @@ class _PollWidgetState extends State<PollWidget> {
           mainAxisCellCount: 1,
           child: GestureDetector(
             onTap: () async {
+              if (StorageRepository.getString("token").isEmpty) {
+                Navigator.pushNamed(context, RouteNames.signInPage);
+                return;
+              }
+
               if (isBiometryRequired) {
-                final isAllowedToVote = await LocalAuthService.checkBiometryPassed(
+                final isAllowedToVote =
+                    await LocalAuthService.checkBiometryPassed(
                   isBiometryPassed: () async =>
-                      context.read<FetchProfileDataBloc>().state.profileModel.biometryPassed == true,
+                      context
+                          .read<FetchProfileDataBloc>()
+                          .state
+                          .profileModel
+                          .biometryPassed ==
+                      true,
                   onBiometryPassed: () => BiometryRepository()
                       .sendBiometryPassed()
-                      .then((value) => context.read<FetchProfileDataBloc>().add(FetchProfileData())),
+                      .then((value) => context
+                          .read<FetchProfileDataBloc>()
+                          .add(FetchProfileData())),
                 );
                 if (!isAllowedToVote) {
                   return;
                 }
               }
+
               if (!isSelected && widget.poll.userVote == null || isChanges) {
                 setState(() {
                   _selectedOptionId = options[index].id;
-                  _votePercentages = computeVotePercentages(widget.poll.pollResult!.voteResults);
+                  _votePercentages = computeVotePercentages(
+                      widget.poll.pollResult!.voteResults);
                 });
                 await voteInPoll(pollId, index);
               }
@@ -329,21 +430,31 @@ class _PollWidgetState extends State<PollWidget> {
                   isSelected: isSelected,
                   onTap: () async {
                     if (isBiometryRequired) {
-                      final isAllowedToVote = await LocalAuthService.checkBiometryPassed(
+                      final isAllowedToVote =
+                          await LocalAuthService.checkBiometryPassed(
                         isBiometryPassed: () async =>
-                            context.read<FetchProfileDataBloc>().state.profileModel.biometryPassed == true,
+                            context
+                                .read<FetchProfileDataBloc>()
+                                .state
+                                .profileModel
+                                .biometryPassed ==
+                            true,
                         onBiometryPassed: () => BiometryRepository()
                             .sendBiometryPassed()
-                            .then((value) => context.read<FetchProfileDataBloc>().add(FetchProfileData())),
+                            .then((value) => context
+                                .read<FetchProfileDataBloc>()
+                                .add(FetchProfileData())),
                       );
                       if (!isAllowedToVote) {
                         return;
                       }
                     }
-                    if (!isSelected && widget.poll.userVote == null || isChanges) {
+                    if (!isSelected && widget.poll.userVote == null ||
+                        isChanges) {
                       setState(() {
                         _selectedOptionId = options[index].id;
-                        _votePercentages = computeVotePercentages(widget.poll.pollResult!.voteResults);
+                        _votePercentages = computeVotePercentages(
+                            widget.poll.pollResult!.voteResults);
                         isSelected = !isSelected;
                       });
                       await voteInPoll(pollId, index);
@@ -355,8 +466,11 @@ class _PollWidgetState extends State<PollWidget> {
                 bottom: 10,
                 right: 8,
                 child: Text(
-                  _votePercentages.length > index ? _votePercentages[index] : '',
-                  style: AppTextStyle.bodyMediumMedium.copyWith(color: Colors.white),
+                  _votePercentages.length > index
+                      ? _votePercentages[index]
+                      : '',
+                  style: AppTextStyle.bodyMediumMedium
+                      .copyWith(color: Colors.white),
                 ),
               )
             ]),
@@ -377,22 +491,39 @@ class _PollWidgetState extends State<PollWidget> {
         padding: const EdgeInsets.symmetric(vertical: 3),
         child: ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(isSelected ? AppColors.c_5856D6 : AppColors.white),
-                foregroundColor: MaterialStateProperty.all(isSelected ? AppColors.secondary : AppColors.black),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                backgroundColor: WidgetStateProperty.all(
+                    isSelected ? AppColors.c_5856D6 : AppColors.white),
+                foregroundColor: WidgetStateProperty.all(
+                    isSelected ? AppColors.secondary : AppColors.black),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 )),
-                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 45)),
-                padding: MaterialStateProperty.all(const EdgeInsets.all(10.0)),
-                shadowColor: MaterialStateProperty.all(Colors.transparent)),
+                minimumSize:
+                    WidgetStateProperty.all(const Size(double.infinity, 45)),
+                padding: WidgetStateProperty.all(const EdgeInsets.all(10.0)),
+                shadowColor: WidgetStateProperty.all(Colors.transparent)),
             onPressed: () async {
+              if (StorageRepository.getString('token').isEmpty) {
+                Navigator.pushNamed(context, RouteNames.signInPage);
+                return;
+              }
+
               if (isBiometryRequired) {
-                final isAllowedToVote = await LocalAuthService.checkBiometryPassed(
+                final isAllowedToVote =
+                    await LocalAuthService.checkBiometryPassed(
                   isBiometryPassed: () async =>
-                      context.read<FetchProfileDataBloc>().state.profileModel.biometryPassed == true,
+                      context
+                          .read<FetchProfileDataBloc>()
+                          .state
+                          .profileModel
+                          .biometryPassed ==
+                      true,
                   onBiometryPassed: () => BiometryRepository()
                       .sendBiometryPassed()
-                      .then((value) => context.read<FetchProfileDataBloc>().add(FetchProfileData())),
+                      .then((value) => context
+                          .read<FetchProfileDataBloc>()
+                          .add(FetchProfileData())),
                 );
                 if (!isAllowedToVote) {
                   return;
@@ -401,7 +532,8 @@ class _PollWidgetState extends State<PollWidget> {
               if (!isSelected && widget.poll.userVote == null || isChanges) {
                 setState(() {
                   _selectedOptionId = option.id;
-                  _votePercentages = computeVotePercentages(widget.poll.pollResult!.voteResults);
+                  _votePercentages = computeVotePercentages(
+                      widget.poll.pollResult!.voteResults);
                 });
                 await voteInPoll(pollId, index);
               }
@@ -423,7 +555,9 @@ class _PollWidgetState extends State<PollWidget> {
                     option.text ?? '',
                   ),
                 ),
-                Text(_votePercentages.length > index ? _votePercentages[index] : '')
+                Text(_votePercentages.length > index
+                    ? _votePercentages[index]
+                    : '')
               ],
             )));
   }
@@ -439,22 +573,34 @@ class _PollWidgetState extends State<PollWidget> {
         padding: const EdgeInsets.symmetric(vertical: 3),
         child: ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(isSelected ? AppColors.c_5856D6 : AppColors.white),
-                foregroundColor: MaterialStateProperty.all(isSelected ? AppColors.secondary : AppColors.black),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                backgroundColor: WidgetStateProperty.all(
+                    isSelected ? AppColors.c_5856D6 : AppColors.white),
+                foregroundColor: WidgetStateProperty.all(
+                    isSelected ? AppColors.secondary : AppColors.black),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 )),
-                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 45)),
-                padding: MaterialStateProperty.all(const EdgeInsets.all(10.0)),
-                shadowColor: MaterialStateProperty.all(Colors.transparent)),
+                minimumSize:
+                    WidgetStateProperty.all(const Size(double.infinity, 45)),
+                padding: WidgetStateProperty.all(const EdgeInsets.all(10.0)),
+                shadowColor: WidgetStateProperty.all(Colors.transparent)),
             onPressed: () async {
               if (isBiometryRequired) {
-                final isAllowedToVote = await LocalAuthService.checkBiometryPassed(
+                final isAllowedToVote =
+                    await LocalAuthService.checkBiometryPassed(
                   isBiometryPassed: () async =>
-                      context.read<FetchProfileDataBloc>().state.profileModel.biometryPassed == true,
+                      context
+                          .read<FetchProfileDataBloc>()
+                          .state
+                          .profileModel
+                          .biometryPassed ==
+                      true,
                   onBiometryPassed: () => BiometryRepository()
                       .sendBiometryPassed()
-                      .then((value) => context.read<FetchProfileDataBloc>().add(FetchProfileData())),
+                      .then((value) => context
+                          .read<FetchProfileDataBloc>()
+                          .add(FetchProfileData())),
                 );
                 if (!isAllowedToVote) {
                   return;
@@ -463,7 +609,8 @@ class _PollWidgetState extends State<PollWidget> {
               if (!isSelected && widget.poll.userVote == null || isChanges) {
                 setState(() {
                   _selectedOptionId = option.id;
-                  _votePercentages = computeVotePercentages(widget.poll.pollResult!.voteResults);
+                  _votePercentages = computeVotePercentages(
+                      widget.poll.pollResult!.voteResults);
                 });
                 await voteInPoll(pollId, index);
               }
@@ -487,7 +634,9 @@ class _PollWidgetState extends State<PollWidget> {
                   ),
                 ),
                 Text(
-                  _votePercentages.length > index ? _votePercentages[index] : '',
+                  _votePercentages.length > index
+                      ? _votePercentages[index]
+                      : '',
                 )
               ],
             )));

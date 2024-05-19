@@ -20,10 +20,12 @@ class AdvancedAudienceControl extends StatelessWidget {
     super.key,
     this.padding = const EdgeInsets.all(20),
     this.safeAreaTop = true,
+    this.title,
   });
 
   final EdgeInsets padding;
   final bool safeAreaTop;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +49,10 @@ class AdvancedAudienceControl extends StatelessWidget {
                   height: 24,
                 )
               : null,
-          title: const Text(
-            "Advanced Audience Control",
-            style: TextStyle(color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: 0.3),
+          title: Text(
+            title ?? "Advanced Audience Control",
+            style:
+                const TextStyle(color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w600, letterSpacing: 0.3),
           ),
           trailing:
               notifier.isAccordionOpen ? customTextWidget(text: "Reset", color: AppColors.c_5856D6) : const Text(''),

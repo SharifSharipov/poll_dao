@@ -80,7 +80,7 @@ class _PollResultPageState extends State<PollResultPage> {
     String? gender,
   }) async {
     log('upd filter');
-    var headers = {'access-token': '\$2b\$10\$ECEYvJ7zmFwhE.hPOw0oju4ofQm3s51zhSgT1rGbpLn9NksQfRwQG'};
+    var headers = {'access-token': StorageRepository.getString("token")};
     var dio = Dio();
     late final String? genderStr;
     switch (gender) {
@@ -97,19 +97,29 @@ class _PollResultPageState extends State<PollResultPage> {
     }
     Map<String, dynamic>? queryParameters = {};
     if (age != null) queryParameters['age'] = age.join(', ');
-    if (biometryPassed != null) queryParameters['biometryPassed'] = biometryPassed;
-    if (location != null && location.isNotEmpty) queryParameters['location'] = location;
-    if (maternalLang != null && maternalLang.isNotEmpty) queryParameters['maternalLang'] = maternalLang;
-    if (nationality != null && nationality.isNotEmpty) queryParameters['nationality'] = nationality;
-    if (genderStr != null && genderStr.isNotEmpty) queryParameters['gender'] = genderStr;
+    if (biometryPassed != null) {
+      queryParameters['biometryPassed'] = biometryPassed;
+    }
+    if (location != null && location.isNotEmpty) {
+      queryParameters['location'] = location;
+    }
+    if (maternalLang != null && maternalLang.isNotEmpty) {
+      queryParameters['maternalLang'] = maternalLang;
+    }
+    if (nationality != null && nationality.isNotEmpty) {
+      queryParameters['nationality'] = nationality;
+    }
+    if (genderStr != null && genderStr.isNotEmpty) {
+      queryParameters['gender'] = genderStr;
+    }
 
     var response = await dio.request(
-      'http://94.131.10.253:3000/vote/poll-votes/60',
+      'http://94.131.10.253:3000/vote/poll-votes/$pollId',
       options: Options(
         method: 'GET',
         headers: headers,
       ),
-      queryParameters: queryParameters,
+      //queryParameters: queryParameters,
     );
 
     if (response.statusCode == 200) {
@@ -144,25 +154,38 @@ class _PollResultPageState extends State<PollResultPage> {
                             5.pw,
                             const Text(
                               'Active Polls',
-                              style: TextStyle(color: AppColors.c_5856D6, fontSize: 17, fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                  color: AppColors.c_5856D6,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
                       ),
                       const Text(
                         'Insights',
-                        style: TextStyle(color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600),
                       ),
                       const Text("                   "),
                       IconButton(
                           onPressed: () async {
                             await showCupertinoDialog(
                               context: context,
-                              builder: (BuildContext context) => CupertinoActionSheetActionWidget(
+                              builder: (BuildContext context) =>
+                                  CupertinoActionSheetActionWidget(
                                 onPressed: () {
-                                  final userId = context.read<FetchProfileDataBloc>().state.profileModel.id;
+                                  final userId = context
+                                      .read<FetchProfileDataBloc>()
+                                      .state
+                                      .profileModel
+                                      .id;
                                   if (userId == poll!.author.id) {
-                                    context.read<PollsBloc>().add(DeletePoll(widget.pollId));
+                                    context
+                                        .read<PollsBloc>()
+                                        .add(DeletePoll(widget.pollId));
                                   } else {
                                     log("handle another person's post");
                                   }
@@ -194,7 +217,8 @@ class _PollResultPageState extends State<PollResultPage> {
                                       age: [filter.minAge, filter.maxAge],
                                       //TODO impl biometry
                                       // biometryPassed: 'false',
-                                      location: filter.selectedLanguage.join(', '),
+                                      location:
+                                          filter.selectedLanguage.join(', '),
                                       maternalLang: filter.selectedLocation,
                                       gender: filter.selectedGender.name,
                                       nationality: filter.selectedNationality,
@@ -208,7 +232,8 @@ class _PollResultPageState extends State<PollResultPage> {
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.data != null && snapshot.hasData) {
+                              } else if (snapshot.data != null &&
+                                  snapshot.hasData) {
                                 final poll = snapshot.data![0] as Poll;
                                 final votes = snapshot.data![1] as Votes;
                                 final userVote = snapshot.data![2] as int?;
@@ -217,55 +242,86 @@ class _PollResultPageState extends State<PollResultPage> {
                                   children: <Widget>[
                                     Text(
                                       poll.name,
-                                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     ListView.builder(
                                       shrinkWrap: true,
                                       itemCount: poll.options.length,
                                       itemBuilder: (context, index) {
                                         final option = poll.options[index];
-                                        final voteCount = votes.voteResults[index];
-                                        final votePercent = votes.totalVotes == 0
-                                            ? 0
-                                            : (voteCount / votes.totalVotes * 100).toStringAsFixed(1);
+                                        final voteCount =
+                                            votes.voteResults[index];
+                                        final votePercent =
+                                            votes.totalVotes == 0
+                                                ? 0
+                                                : (voteCount /
+                                                        votes.totalVotes *
+                                                        100)
+                                                    .toStringAsFixed(1);
 
                                         return ListTile(
-                                          contentPadding: const EdgeInsets.all(0),
-                                          leading: Container(
+                                          contentPadding:
+                                              const EdgeInsets.all(0),
+                                          leading: option.image == null ? Container(
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                              color: index == userVote ? AppColors.c_5856D6 : AppColors.c_93A2B4,
+                                              color: index == userVote
+                                                  ? AppColors.c_5856D6
+                                                  : AppColors.secondary,
                                               shape: BoxShape.circle,
                                             ),
                                             child: Center(
                                               child: Text(
                                                 answerList[index],
-                                                style: AppTextStyle.bodyLargeBold.copyWith(
-                                                  color: index == userVote ? AppColors.white : AppColors.c_5856D6,
+                                                style: AppTextStyle
+                                                    .bodyLargeBold
+                                                    .copyWith(
+                                                  color: index == userVote
+                                                      ? AppColors.white
+                                                      : AppColors.c_5856D6,
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          ) : ClipRRect(
+                                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                              child: Image.network(
+                                                'http://94.131.10.253:3000/${option.image}',
+                                                width: 60,
+                                                height: 60,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           title: Text(option.text ?? ''),
                                           subtitle: Stack(
                                             children: <Widget>[
                                               Container(
                                                 width: votes.totalVotes == 0
                                                     ? 10
-                                                    : MediaQuery.of(context).size.width *
-                                                        (voteCount / votes.totalVotes),
+                                                    : MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        (voteCount /
+                                                            votes.totalVotes),
                                                 height: 15,
                                                 decoration: BoxDecoration(
-                                                  color: index == userVote ? AppColors.c_5856D6 : AppColors.c_93A2B4,
-                                                  borderRadius: BorderRadius.circular(5),
+                                                  color: index == userVote
+                                                      ? AppColors.c_5856D6
+                                                      : AppColors.secondary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
                                                 ),
                                               ),
                                             ],
                                           ),
                                           trailing: Text(
                                             '$votePercent%',
-                                            style: AppTextStyle.bodyMediumRegular.copyWith(color: AppColors.c_93A2B4),
+                                            style: AppTextStyle
+                                                .bodyMediumRegular
+                                                .copyWith(
+                                                    color: AppColors.c_93A2B4),
                                           ),
                                         );
                                       },
@@ -282,6 +338,7 @@ class _PollResultPageState extends State<PollResultPage> {
                   const AdvancedAudienceControl(
                     padding: EdgeInsets.only(top: 20),
                     safeAreaTop: false,
+                    title: 'Advanced Filters',
                   ),
                 ],
               ),
@@ -317,7 +374,8 @@ class PollResultOption extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
-            backgroundColor: isSelected ? AppColors.c_5856D6 : const Color(0x00F2F2F7),
+            backgroundColor:
+                isSelected ? AppColors.c_5856D6 : const Color(0x00F2F2F7),
             radius: 40,
             child: Text(answerList[index]),
           ),
@@ -339,7 +397,9 @@ class PollResultOption extends StatelessWidget {
                     width: 25,
                     height: 15,
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.c_5856D6 : const Color(0x00F2F2F7),
+                      color: isSelected
+                          ? AppColors.c_5856D6
+                          : const Color(0x00F2F2F7),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),

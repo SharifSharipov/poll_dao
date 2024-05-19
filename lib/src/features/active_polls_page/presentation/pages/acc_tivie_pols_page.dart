@@ -121,6 +121,7 @@ class _ActivePolsPageState extends State<ActivePolsPage> {
                           child: AdvancedAudienceControl(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             safeAreaTop: false,
+                            title: 'Advanced Filters',
 
                           ),
                         ),

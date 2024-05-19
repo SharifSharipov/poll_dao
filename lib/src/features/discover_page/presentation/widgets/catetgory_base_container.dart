@@ -8,7 +8,7 @@ class SelectCategoryContainer extends StatelessWidget {
       {super.key, required this.child, this.padding = const EdgeInsets.only(left: 12), required this.color});
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    Theme.of(context);
     // TODO: implement build
     return ZoomTapAnimation(
       onTap: () {},

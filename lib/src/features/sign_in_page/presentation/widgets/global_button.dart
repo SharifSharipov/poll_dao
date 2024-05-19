@@ -8,21 +8,28 @@ class GlobalButton extends StatelessWidget {
     required this.data,
     required this.color,
     this.border,
+    this.padding,
+    this.cornerRadius,
   });
 
   final VoidCallback onTap;
   final Row data;
   final Color color;
   final Border? border;
+  final EdgeInsets? padding;
+  final double? cornerRadius;
 
   @override
   Widget build(BuildContext context) {
     return ZoomTapAnimation(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 18),
-        decoration:
-            BoxDecoration(color: color, borderRadius: BorderRadius.circular(20), border: border),
+        padding: padding ?? const EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(cornerRadius ?? 20),
+          border: border,
+        ),
         child: data,
       ),
     );

@@ -166,11 +166,13 @@ class PollListWidget extends StatefulWidget {
 class _PollListWidgetState extends State<PollListWidget> {
   late CategoryProvider categoryProvider;
   late final PollsBloc pollsBloc;
+  late final FetchProfileDataBloc userBloc;
 
   @override
   void initState() {
     super.initState();
     pollsBloc = BlocProvider.of<PollsBloc>(context);
+    userBloc = BlocProvider.of<FetchProfileDataBloc>(context);
     categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     categoryProvider.addListener(_fetchPolls);
     _fetchPolls();
@@ -192,37 +194,80 @@ class _PollListWidgetState extends State<PollListWidget> {
   }
 
   List<Poll> filterAudiences(List<Poll> pollList, ProfileModel profile) {
-    LoggerService.w("sorting polls");
-    return pollList.where((poll) {
-      bool matches = true;
+    Poll? currentPoll;
+    List<String> male = ['male', 'man'];
+    List<String> female = ['female', 'girl'];
+    try {
+      return pollList.where((poll) {
+        currentPoll = poll;
+        if (poll.audience!.maternalLang != null &&
+            poll.audience!.maternalLang!.isNotEmpty &&
+            poll.audience!.maternalLang != profile.maternalLang.toString()) {
+          return false;
+        }
+        if (poll.audience!.age != null &&
+            poll.audience!.age!.isNotEmpty &&
+            !poll.audience!.age!.contains("undefined")) {
+          if (poll.audience!.age!.contains('-')) {
+            List<String> ageRange = poll.audience!.age!.split('-');
+            if (ageRange.length == 2) {
+              int lower = int.parse(ageRange[0]);
+              int upper = int.parse(ageRange[1]);
+              if (profile.age < lower || profile.age > upper) {
+                return false;
+              }
+            }
+          } else {
+            int age = int.parse(poll.audience!.age!);
+            if (profile.age != age) {
+              return false;
+            }
+          }
+        }
+        if (poll.audience!.gender != null &&
+            poll.audience!.gender!.isNotEmpty &&
+            !poll.audience!.gender!.toLowerCase().contains('all')) {
+          if (male.contains(profile.gender.toLowerCase()) && !male.contains(poll.audience!.gender!.toLowerCase())) {
+            return false;
+          }
+          if (female.contains(profile.gender.toLowerCase()) && !female.contains(poll.audience!.gender!.toLowerCase())) {
+            return false;
+          }
+        }
+        if (poll.audience!.location != null &&
+            poll.audience!.location!.isNotEmpty &&
+            poll.audience!.location != profile.location) {
+          return false;
+        }
+        if (poll.audience!.education != null &&
+            poll.audience!.education!.isNotEmpty &&
+            poll.audience!.education != profile.education) {
+          return false;
+        }
+        if (poll.audience!.nationality != null &&
+            poll.audience!.nationality!.isNotEmpty &&
+            poll.audience!.nationality != profile.nationality) {
+          return false;
+        }
 
-      if (poll.audience!.maternalLang != null && poll.audience!.maternalLang != profile.maternalLang.toString()) {
-        print('sort maternalLang poll ${poll.id}');
-        matches = false;
-      }
-      if (poll.audience!.age != null && poll.audience!.age != profile.age.toString()) {
-        print('sort age poll ${poll.id}');
-        matches = false;
-      }
-      if (poll.audience!.gender != null && poll.audience!.gender != profile.gender) {
-        print('sort gender poll ${poll.id}');
-        matches = false;
-      }
-      if (poll.audience!.location != null && poll.audience!.location != profile.location) {
-        print('sort location poll ${poll.id}');
-        matches = false;
-      }
-      if (poll.audience!.education != null && poll.audience!.education != profile.education) {
-        print('sort education poll ${poll.id}');
-        matches = false;
-      }
-      if (poll.audience!.nationality != null && poll.audience!.nationality != profile.nationality) {
-        print('sort nationality poll ${poll.id}');
-        matches = false;
-      }
+        return true;
+      }).toList();
+    } catch (e) {
+      LoggerService.e("error sorting polls $e, age: $currentPoll ");
+      return pollList;
+    }
+  }
 
-      return matches;
-    }).toList();
+  bool shouldBlur(ProfileModel user, Audience audience) {
+    final bool isAgeValid = audience.age == null || audience.age!.isEmpty || (user.age != 0);
+    final bool isGenderValid = audience.gender == null || audience.gender!.isEmpty || (user.gender.isEmpty);
+    final bool isEducationValid = audience.education == null || audience.education!.isEmpty || (user.education.isEmpty);
+    final bool isLocationValid = audience.location == null || audience.location!.isEmpty || (user.location.isEmpty);
+    final bool isNationalityValid = audience.nationality == null ||
+        audience.nationality!.isEmpty ||
+        (user.nationality.isEmpty && audience.nationality != null);
+
+    return !isAgeValid || !isGenderValid || !isEducationValid || !isLocationValid || !isNationalityValid;
   }
 
   @override
@@ -230,15 +275,20 @@ class _PollListWidgetState extends State<PollListWidget> {
     return BlocBuilder<PollsBloc, PollsState>(
       builder: (context, state) {
         if (state is PollsBlocLoading) {
-          return const SliverToBoxAdapter(child: CircularProgressIndicator());
+          return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
         } else if (state is PollsBlocLoaded) {
+          final List<Poll> polls = filterAudiences(state.polls, userBloc.state.profileModel);
           return SliverList.builder(
-            itemCount: state.polls.length + 1,
+            itemCount: polls.length,
             itemBuilder: (context, index) {
-              if (index < state.polls.length) {
-                return PollWidget(poll: state.polls[index]);
-              }
-              return null;
+              final user = userBloc.state.profileModel;
+              final isBlurWidget = polls[index].audience == null ? false : shouldBlur(user, polls[index].audience!);
+              return RepaintBoundary(
+                child: PollWidget(
+                  poll: polls[index],
+                  isBlured: isBlurWidget,
+                ),
+              );
             },
           );
         } else if (state is PollsError) {
@@ -294,7 +344,6 @@ Future<int> fetchMyPolls() async {
 
     if (response.statusCode == 200) {
       List<dynamic> data = response.data;
-      print("Количество элементов: ${data.length}");
       return data.length;
     } else {
       throw Exception("Failed to fetch data: ${response.statusCode}");
